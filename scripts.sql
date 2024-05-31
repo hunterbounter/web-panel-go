@@ -35,7 +35,16 @@ CREATE TYPE public.scan_results AS (
     other_info text,
     reference text,
     cwe_id int4,
-    wasc_id int4);
+    wasc_id int4,
+    machine_id varchar);
+
+-- DROP TYPE public.targets;
+
+CREATE TYPE public.targets AS (
+    id serial4,
+    value varchar,
+    "type" int4,
+    status int4);
 
 -- DROP TYPE public."_openvas_results";
 
@@ -63,6 +72,20 @@ CREATE TYPE public."_scan_results" (
 	STORAGE = any,
 	CATEGORY = A,
 	ELEMENT = public.scan_results,
+	DELIMITER = ',');
+
+-- DROP TYPE public."_targets";
+
+CREATE TYPE public."_targets" (
+	INPUT = array_in,
+	OUTPUT = array_out,
+	RECEIVE = array_recv,
+	SEND = array_send,
+	ANALYZE = array_typanalyze,
+	ALIGNMENT = 8,
+	STORAGE = any,
+	CATEGORY = A,
+	ELEMENT = public.targets,
 	DELIMITER = ',');
 
 -- DROP SEQUENCE public.openvas_results_id_seq;
@@ -94,6 +117,21 @@ CREATE SEQUENCE public.scan_results_id_seq
 
 ALTER SEQUENCE public.scan_results_id_seq OWNER TO zap_user;
 GRANT ALL ON SEQUENCE public.scan_results_id_seq TO zap_user;
+
+-- DROP SEQUENCE public.targets_id_seq;
+
+CREATE SEQUENCE public.targets_id_seq
+    INCREMENT BY 1
+    MINVALUE 1
+    MAXVALUE 2147483647
+    START 1
+	CACHE 1
+	NO CYCLE;
+
+-- Permissions
+
+ALTER SEQUENCE public.targets_id_seq OWNER TO zap_user;
+GRANT ALL ON SEQUENCE public.targets_id_seq TO zap_user;
 -- public.openvas_results definition
 
 -- Drop table
@@ -137,7 +175,9 @@ CREATE TABLE public.scan_results (
                                      reference text NULL,
                                      cwe_id int4 NULL,
                                      wasc_id int4 NULL,
-                                     CONSTRAINT scan_results_pkey PRIMARY KEY (id)
+                                     machine_id varchar NULL,
+                                     CONSTRAINT scan_results_pkey PRIMARY KEY (id),
+                                     CONSTRAINT scan_results_unique UNIQUE (id)
 );
 
 -- Permissions
@@ -155,12 +195,14 @@ GRANT ALL ON TABLE public.scan_results TO zap_user;
 CREATE TABLE public.targets (
                                 id serial4 NOT NULL,
                                 value varchar NULL,
-                                "type" int4 NULL,
-                                status int4 NULL -- 1 - Waiting 2 - Started 3 - Finish
+                                "type" int4 NULL, -- 1 - Domain 2 - Ipv4 Addr
+                                status int4 NULL, -- 1 - Waiting 2 - Started 3 - Finish
+                                CONSTRAINT targets_unique UNIQUE (id)
 );
 
 -- Column comments
 
+COMMENT ON COLUMN public.targets."type" IS '1 - Domain 2 - Ipv4 Addr';
 COMMENT ON COLUMN public.targets.status IS '1 - Waiting 2 - Started 3 - Finish';
 
 -- Permissions
