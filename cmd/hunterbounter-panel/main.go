@@ -9,6 +9,7 @@ import (
 )
 
 func init() {
+	return
 	postgres_info := database.PostgreSQLInfo{
 		Username:  "zap_user",
 		Password:  "your_password",

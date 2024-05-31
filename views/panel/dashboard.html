@@ -370,13 +370,13 @@
                                 <div class="form-group">
                                     <label class="form-label" for="product-title">Target</label>
                                     <div class="form-control-wrap"> 
-                                        <textarea rows="35" class="form-control" id="product-description" placeholder="abc.com &#10;abcd.com"></textarea>
+                                        <textarea rows="35" class="form-control" id="targets" placeholder="abc.com &#10;abcd.com"></textarea>
                                     </div>
                                 </div>
                             </div>
                              
                             <div class="col-12">
-                                <button class="btn btn-success"><em class="icon ni ni-plus"></em><span>Save</span></button>
+                                <button class="btn btn-success btn-save-target"><em class="icon ni ni-plus"></em><span>Save</span></button>
                             </div>
                         </div>
                     </div><!-- .nk-block -->
@@ -396,6 +396,42 @@
     <script src="./assets/js/bundle.js?ver=3.2.3"></script>
     <script src="./assets/js/scripts.js?ver=3.2.3"></script>
     <script src="./assets/js/charts/gd-invest.js?ver=3.2.3"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            // Add new target
+            $(".btn-save-target").click(function () {
+                var dumpTargets = $("#targets").val();
+
+                dumpTargets = dumpTargets.split("\n");
+
+                var targets = JSON.stringify(dumpTargets);
+
+                console.log(targets)
+
+                $.ajax({
+                    url: "/api/target/save",
+                    type: "POST",
+                    data: {
+                        targets: targets
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.success) {
+                            alert("Targets added successfully");
+                            location.reload();
+                        } else {
+                            alert("Error adding targets");
+                        }
+                    }
+                });
+            } );
+
+
+        });
+
+    </script>
 </body>
 
 </html>

@@ -17,8 +17,24 @@ func (h HttpRouter) InstallRouter(app *fiber.App) {
 
 	api := app.Group("/api", logger.New())
 
+	telemetry := app.Group("/telemetry", logger.New())
+
 	portal.Get("/", acl.Unauthorized(), controller.DashboardGET)
+
 	portal.Get("/vulnerability-report", acl.Unauthorized(), controller.VulnerabilityReportGET)
+
+	/*
+		Api Endpoints
+	*/
+
+	api.Post("/target/save", acl.Unauthorized(), controller.SaveTarget)
+
+	/*
+		Telemetry Endpoints
+	*/
+
+	telemetry.Get("/save", acl.Unauthorized(), controller.SaveTelemetryGet)
+	telemetry.Post("/save", acl.Unauthorized(), controller.SaveTelemetry)
 
 	// Check if the server is up
 	api.Get("/ping", func(c *fiber.Ctx) error {
