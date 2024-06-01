@@ -36,6 +36,12 @@ func (h HttpRouter) InstallRouter(app *fiber.App) {
 	telemetry.Get("/save", acl.Unauthorized(), controller.SaveTelemetryGet)
 	telemetry.Post("/save", acl.Unauthorized(), controller.SaveTelemetry)
 
+	/*
+		Get Scanned Targets
+	*/
+
+	portal.Post("/target", acl.Unauthorized(), controller.GetTargets)
+
 	// Check if the server is up
 	api.Get("/ping", func(c *fiber.Ctx) error {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(true, "Pong", nil))
