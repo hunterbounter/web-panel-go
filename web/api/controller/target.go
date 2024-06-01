@@ -70,6 +70,15 @@ func GetTargets(c *fiber.Ctx) error {
 	for _, target := range targetsResponse {
 
 		targets = append(targets, target["value"].(string))
+		/*
+			// Update the status of the targets to running
+		*/
+		database.Update("targets", map[string]interface{}{
+			"status": "2", // running
+		}, map[string]interface{}{
+			"id": target["id"],
+		})
+
 		maxCount++
 		if maxCount >= MAX_RUNNING_SCAN_COUNT {
 			break

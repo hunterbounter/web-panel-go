@@ -12,7 +12,7 @@ COMMENT ON SCHEMA public IS 'standard public schema';
 -- DROP TYPE public.openvas_results;
 
 CREATE TYPE public.openvas_results AS (
-    id serial4,
+    id SERIAL,
     report_id varchar(255),
     host text,
     port int4,
@@ -26,7 +26,7 @@ CREATE TYPE public.openvas_results AS (
 -- DROP TYPE public.scan_results;
 
 CREATE TYPE public.scan_results AS (
-    id serial4,
+    id SERIAL,
     alert_id int4,
     url text,
     risk text,
@@ -41,7 +41,7 @@ CREATE TYPE public.scan_results AS (
 -- DROP TYPE public.targets;
 
 CREATE TYPE public.targets AS (
-    id serial4,
+    id SERIAL,
     value varchar,
     "type" int4,
     status int4);
@@ -139,7 +139,7 @@ GRANT ALL ON SEQUENCE public.targets_id_seq TO zap_user;
 -- DROP TABLE public.openvas_results;
 
 CREATE TABLE public.openvas_results (
-                                        id serial4 NOT NULL,
+                                        id SERIAL NOT NULL,
                                         report_id varchar(255) NOT NULL,
                                         host text NOT NULL,
                                         port int4 NOT NULL,
@@ -165,7 +165,7 @@ GRANT ALL ON TABLE public.openvas_results TO zap_user;
 -- DROP TABLE public.scan_results;
 
 CREATE TABLE public.scan_results (
-                                     id serial4 NOT NULL,
+                                     id SERIAL NOT NULL,
                                      alert_id int4 NOT NULL,
                                      url text NOT NULL,
                                      risk text NOT NULL,
@@ -193,7 +193,7 @@ GRANT ALL ON TABLE public.scan_results TO zap_user;
 -- DROP TABLE public.targets;
 
 CREATE TABLE public.targets (
-                                id serial4 NOT NULL,
+                                id SERIAL NOT NULL,
                                 value varchar NULL,
                                 "type" int4 NULL, -- 1 - Domain 2 - Ipv4 Addr
                                 status int4 NULL, -- 1 - Waiting 2 - Started 3 - Finish
