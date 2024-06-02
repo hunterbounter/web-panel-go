@@ -345,7 +345,7 @@ func Select(tableName string, whereData map[string]interface{}) ([]map[string]in
 	}
 
 	// Log the SQL query with values, wrapping string values in single quotes
-	log.Printf("Executing SQL Query: %s\n", formatSQLQuery(selectQuery, whereData))
+	//log.Printf("Executing SQL Query: %s\n", formatSQLQuery(selectQuery, whereData))
 
 	return ResultArray(selectQuery, whereData)
 }
@@ -462,6 +462,6 @@ func ReadConfig() Info {
 	return databases
 }
 
-func CurrentTime() int64 {
-	return time.Now().Unix()
+func CurrentTime() string {
+	return time.Now().Format("2006-01-02 15:04:05")
 }

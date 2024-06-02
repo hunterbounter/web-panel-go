@@ -42,6 +42,10 @@ func StructToMap(v interface{}) map[string]interface{} {
 	return data
 }
 
+func ToBase64(v string) string {
+	return v
+}
+
 func UnmarshalJson(data []byte, v interface{}) error {
 	return json.Unmarshal(data, v)
 }

@@ -19,21 +19,25 @@ func (h HttpRouter) InstallRouter(app *fiber.App) {
 
 	telemetry := app.Group("/telemetry", logger.New())
 
-	portal.Get("/", acl.Unauthorized(), controller.DashboardGET)
+	portal.Get("/login", acl.Unauthorized(), controller.LoginGet)
+	api.Post("/login", acl.Unauthorized(), controller.LoginPost)
+	portal.Get("/", acl.Authorized(), controller.DashboardGET)
 
-	portal.Get("/vulnerability-report", acl.Unauthorized(), controller.VulnerabilityReportGET)
+	portal.Get("/vulnerability-report", acl.Authorized(), controller.VulnerabilityReportGET)
+	portal.Get("/vulnerability-report/:id", acl.Authorized(), controller.VulnerabilityReportDetailGET)
+
+	api.Post("/scan/start", acl.Authorized(), controller.StartScan)
 
 	/*
 		Api Endpoints
 	*/
 
-	api.Post("/target/save", acl.Unauthorized(), controller.SaveTarget)
+	api.Post("/target/save", acl.Authorized(), controller.SaveTarget)
 
 	/*
 		Telemetry Endpoints
 	*/
 
-	telemetry.Get("/save", acl.Unauthorized(), controller.SaveTelemetryGet)
 	telemetry.Post("/save", acl.Unauthorized(), controller.SaveTelemetry)
 
 	/*
@@ -46,6 +50,8 @@ func (h HttpRouter) InstallRouter(app *fiber.App) {
 		Scan Results
 	*/
 	portal.Post("/scan_results/save", acl.Unauthorized(), controller.ScanResultPOST)
+
+	api.Post("/agent/kill", acl.Authorized(), controller.KillAgent)
 
 	// Check if the server is up
 	api.Get("/ping", func(c *fiber.Ctx) error {

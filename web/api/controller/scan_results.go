@@ -1,10 +1,14 @@
 package controller
 
 import (
+	"encoding/base64"
+	"encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"html"
 	"hunterbounter.com/web-panel/pkg/database"
+	"hunterbounter.com/web-panel/pkg/hunterbounter_json"
 	"hunterbounter.com/web-panel/pkg/hunterbounter_response"
+	"hunterbounter.com/web-panel/pkg/utils"
 	"log"
 )
 
@@ -45,23 +49,38 @@ func ScanResultPOST(c *fiber.Ctx) error {
 			//log.Println("Record is exist")
 			continue
 		}
+
+		elemRecord["description"] = html.EscapeString(utils.SafeEscapeString(elemRecord["description"]))
+		elemRecord["solution"] = html.EscapeString(utils.SafeEscapeString(elemRecord["solution"]))
+		elemRecord["other"] = html.EscapeString(utils.SafeEscapeString(elemRecord["other"]))
+		//json_string := hunterbounter_json.ToString(elemRecord)
+
+		jsonData, err := json.Marshal(elemRecord)
+		if err != nil {
+			log.Fatal(err)
+		}
+		encodedData := base64.StdEncoding.EncodeToString(jsonData)
+
 		//log.Println("Record is not exist", hunterbounter_json.ToString(elemRecord))
 		var inserData = map[string]interface{}{
 			"url":         elemRecord["url"],
 			"zap_id":      elemRecord["id"],
 			"risk":        elemRecord["risk"],
-			"description": html.EscapeString(elemRecord["description"].(string)),
-			"solution":    html.EscapeString(elemRecord["solution"].(string)),
+			"description": elemRecord["description"],
+			"solution":    elemRecord["solution"],
 			"other_info":  elemRecord["other"].(string),
 			"reference":   elemRecord["reference"],
 			"cwe_id":      elemRecord["cweid"],
 			"wasc_id":     elemRecord["wascid"],
 			"machine_id":  elemRecord["machine_id"],
+			"full_json":   encodedData,
 		}
 
 		// Insert the record
-		_, err := database.Insert("zap_scan_results", inserData, false)
+		_, err = database.Insert("zap_scan_results", inserData, false)
 		if err != nil {
+			log.Println("insert_data -> ", hunterbounter_json.ToString(inserData))
+			log.Println("elemRecord -> ", hunterbounter_json.ToString(elemRecord))
 			log.Println("Error while inserting record", err)
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while inserting record", nil))
 		}
