@@ -13,8 +13,6 @@ func InitSys() {
 	// ENV
 	var sysEnv = InitEnv()
 
-	// init worker
-	worker.Init()
 	// init web session
 	hunterbounter_session.InitSession()
 
@@ -36,5 +34,8 @@ func InitSys() {
 		PostgreSQL: postgres_info,
 	}
 	database.Connect(info)
+
+	// init worker
+	worker.Init()
 
 }

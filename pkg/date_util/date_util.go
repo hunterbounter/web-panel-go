@@ -90,6 +90,32 @@ func EndOfDay() string {
 	return endOfDay.Format("2006-01-02 23:59:59")
 }
 
+func DateDiffInDays(t1, t2 time.Time) int {
+	return int(t1.Sub(t2).Hours() / 24)
+}
+
+const layoutDB = "02.01.2006 15:04:05"      // DB'den gelen tarih formatı
+const layoutCurrent = "2006.01.02 15:04:05" // DateYYYYMMDDHH24MISS formatı
+
+// KILL_DOCKER_PROCESS_TIMEOUT süresi (saniye cinsinden)
+const KILL_DOCKER_PROCESS_TIMEOUT = 300 // 5 dakika = 300 saniye
+
+// DateDiff iki tarih/zaman stringi arasındaki farkı saniye cinsinden döndürür
+func DateDiff(date1, date2 string) (int64, error) {
+	t1, err1 := time.Parse(layoutDB, date1)
+	if err1 != nil {
+		return 0, fmt.Errorf("error parsing date1: %v", err1)
+	}
+
+	t2, err2 := time.Parse(layoutCurrent, date2)
+	if err2 != nil {
+		return 0, fmt.Errorf("error parsing date2: %v", err2)
+	}
+
+	diff := t2.Sub(t1)
+	return int64(diff.Seconds()), nil
+}
+
 func example() {
 	fmt.Println("Current Date:", CurrentDate())
 	fmt.Println("Current Time:", CurrentTime())
