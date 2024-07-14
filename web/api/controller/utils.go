@@ -5,6 +5,14 @@ import (
 	"os"
 )
 
+// Get Real Ip Address
+func GetRealIp(c *fiber.Ctx) string {
+	if c.IP() == "127.0.0.1" || c.IP() == "::1" {
+		return c.Get("X-Real-IP")
+	}
+	return c.IP()
+}
+
 func CheckIsDev() bool {
 	if os.Getenv("USER") == "eminsargin" {
 		return true
