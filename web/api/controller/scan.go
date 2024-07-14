@@ -25,7 +25,9 @@ func StartScan(c *fiber.Ctx) error {
 	log.Println(containers)
 	log.Println("Total running containers", len(containers))
 
-	// Eğer çalışan container sayısı max container sayısından küçükse eşitlenene kadar yeni container başlat
+	// If the number of running containers is less than the max number of containers, start a new container until it is equalized
+	log.Println("Total running containers", len(containers))
+	log.Println("Max container count", MAX_DOCKER_CONTAINER_COUNT)
 	if len(containers) < MAX_DOCKER_CONTAINER_COUNT {
 		for i := 0; i < MAX_DOCKER_CONTAINER_COUNT-len(containers); i++ {
 			imageName := "hunter_bounter_zapv1"
