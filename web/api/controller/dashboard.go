@@ -9,8 +9,6 @@ import (
 	"log"
 )
 
-const BACKEND_URL = "http://localhost:9001/"
-
 func DashboardGET(c *fiber.Ctx) error {
 
 	var totalReportCount = model.GetTotalReportCount()
@@ -40,7 +38,6 @@ func SaveTarget(c *fiber.Ctx) error {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Targets cannot be empty", nil))
 	}
 
-	// targetsRaw'ı JSON listesine dönüştür
 	var targetsList []string
 	if err := json.Unmarshal([]byte(targetsRaw), &targetsList); err != nil {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Targets cannot be empty", nil))
