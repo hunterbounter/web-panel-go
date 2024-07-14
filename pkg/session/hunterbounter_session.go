@@ -54,7 +54,7 @@ func DestroySession(c *fiber.Ctx) error {
 	return sess.Destroy()
 }
 
-func init() {
+func InitSession() {
 	// Initialize custom config
 	store = sqlite3.New(sqlite3.Config{
 		Database:        "/fiber.sqlite3",
