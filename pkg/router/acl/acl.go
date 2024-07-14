@@ -9,29 +9,34 @@ import (
 func Unauthorized() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
+		var sessionFound bool
 		//print session
-		sess, err := hunterbounter_session.HunterSession.Get(c)
-		log.Println("Disallow Anon -> Session: ", sess)
+		sess, err := hunterbounter_session.GetSessionValue(c, hunterbounter_session.SESSION_KEY)
 		if err != nil {
-			return c.SendStatus(fiber.StatusInternalServerError)
+			sessionFound = false
 		}
 
-		if sess.Get("userId") != nil {
+		if sess != nil && sess.UserID != "" {
+			sessionFound = true
+		}
+
+		if sessionFound {
 			return c.Redirect("/dashboard")
 		}
-
 		return c.Next()
 	}
 }
 
 func Authorized() fiber.Handler {
 	return func(c *fiber.Ctx) error {
-		sess, err := hunterbounter_session.HunterSession.Get(c)
+
+		sess, err := hunterbounter_session.GetSessionValue(c, hunterbounter_session.SESSION_KEY)
 		if err != nil {
-			return c.SendStatus(fiber.StatusInternalServerError)
+			log.Println("Session Error: ", err)
+			return c.Redirect("/login")
 		}
 
-		if sess.Get("userId") == nil {
+		if sess.UserID == "" {
 			return c.Redirect("/login")
 		}
 
