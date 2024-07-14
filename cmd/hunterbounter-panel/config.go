@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/joho/godotenv"
+	"hunterbounter.com/web-panel/pkg/utils"
 	"log"
 	"os"
 )
@@ -17,13 +18,13 @@ type EnvirontmentVariables struct {
 	DBType     string
 }
 
-func InitEnv() EnvirontmentVariables {
-	err := godotenv.Load(".env")
+func InitEnv() *EnvirontmentVariables {
+	err := godotenv.Load(utils.RunningDir() + ".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	return EnvirontmentVariables{
+	return &EnvirontmentVariables{
 		DBUsername: os.Getenv("DB_USERNAME"),
 		DBPassword: os.Getenv("DB_PASSWORD"),
 		DBHost:     os.Getenv("DB_HOST"),
