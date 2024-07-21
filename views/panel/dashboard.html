@@ -270,14 +270,40 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="product-title">Target</label>
+                                    <label class="form-label">Target</label>
                                     <div class="form-control-wrap"> 
-                                        <textarea rows="35" class="form-control" id="targets" placeholder="abc.com &#10;abcd.com"></textarea>
+                                        <textarea rows="15" class="form-control" id="targets" placeholder="abc.com &#10;abcd.com"></textarea>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mt-3">
+                               <div class="row">
+                                   <span class="preview-title overline-title">Please Select Agent</span>
+
+                               </div>
+                                <div class="col-md-5">
+                                    <div class="preview-block">
+
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"  id="OpenVas">
+                                            <label class="custom-control-label" for="OpenVas">OpenVAS</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="preview-block">
+
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"  id="ZapProxy">
+                                            <label class="custom-control-label" for="ZapProxy">ZAP Proxy</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                              
-                            <div class="col-12">
+                            <div class="col-12 mt-3 d-flex justify-content-end">
                                 <button class="btn btn-success btn-save-target"><em class="icon ni ni-plus"></em><span>Save</span></button>
                             </div>
                         </div>
@@ -312,11 +338,22 @@
 
                 console.log(targets)
 
+                var selectedAgents = [];
+                if ($("#OpenVas").is(":checked")) {
+                    selectedAgents.push("OpenVas");
+                }
+                if ($("#ZapProxy").is(":checked")) {
+                    selectedAgents.push("ZapProxy");
+                }
+
+
+
                 $.ajax({
                     url: "/api/target/save",
                     type: "POST",
                     data: {
-                        targets: targets
+                        targets: targets,
+                        selectedAgents: selectedAgents
                     },
                     success: function (data) {
                         console.log(data);
