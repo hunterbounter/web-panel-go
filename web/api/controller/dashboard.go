@@ -33,6 +33,33 @@ func SaveTarget(c *fiber.Ctx) error {
 
 	log.Println("Coming from SaveTarget")
 
+	selectedAgents := c.FormValue("selectedAgents")
+
+	log.Println("Selected Agents : ", selectedAgents)
+
+	if selectedAgents == "" {
+		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
+	}
+
+	var selectedAgentList []string
+	if err := json.Unmarshal([]byte(selectedAgents), &selectedAgentList); err != nil {
+		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
+	}
+
+	if len(selectedAgentList) == 0 {
+		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
+	}
+
+	for _, agent := range selectedAgentList {
+		if agent == "" {
+			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
+		}
+		if agent != "OpenVas" && agent != "ZapProxy" {
+			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
+		}
+
+	}
+
 	targetsRaw := c.FormValue("targets")
 	if targetsRaw == "" {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Targets cannot be empty", nil))
