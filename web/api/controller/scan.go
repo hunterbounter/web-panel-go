@@ -18,7 +18,9 @@ func StartScan(c *fiber.Ctx) error {
 	// First find total waiting scan count
 
 	var zapWaitingScanCount = model.GetWaitingZAPTargetDomainCount()
+	log.Println("ZAP Waiting Scan Count", zapWaitingScanCount)
 	var openvasWaitingScanCount = model.GetWaitingOpenVASTargetDomainCount()
+	log.Println("OpenVAS Waiting Scan Count", openvasWaitingScanCount)
 
 	var totalWaitingScanCount = zapWaitingScanCount + openvasWaitingScanCount
 
@@ -41,9 +43,10 @@ func StartScan(c *fiber.Ctx) error {
 	log.Println("Total running containers", len(containers))
 	log.Println("Required container count", requiredContainers)
 	if len(containers) < requiredContainers {
-		zapContainersToStart := zapWaitingScanCount / targetsPerContainer
-		openvasContainersToStart := openvasWaitingScanCount / targetsPerContainer
-
+		zapContainersToStart := (zapWaitingScanCount + targetsPerContainer - 1) / targetsPerContainer
+		log.Println("zapContainersToStart", zapContainersToStart)
+		openvasContainersToStart := (openvasWaitingScanCount + targetsPerContainer - 1) / targetsPerContainer
+		log.Println("openvasContainersToStart", openvasContainersToStart)
 		for i := 0; i < zapContainersToStart; i++ {
 			imageName := "hunter_bounter_zapv1"
 			user := "root"

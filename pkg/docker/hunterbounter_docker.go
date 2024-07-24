@@ -94,6 +94,7 @@ func (d *DockerManager) RunContainer(imageName, user, port, dns string) (string,
 // no command run
 func (d *DockerManager) RunContainerNoCommand(imageName string) (string, error) {
 	cmd := exec.Command("docker", "run", "-d", imageName)
+	log.Println("Full command: ", cmd.String())
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	err := cmd.Run()
