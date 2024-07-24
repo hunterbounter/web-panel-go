@@ -24,7 +24,8 @@ func (h HttpRouter) InstallRouter(app *fiber.App) {
 	portal.Get("/", acl.Authorized(), controller.DashboardGET)
 
 	portal.Get("/vulnerability-report", acl.Authorized(), controller.VulnerabilityReportGET)
-	portal.Get("/vulnerability-report/:id", acl.Authorized(), controller.VulnerabilityReportDetailGET)
+	portal.Get("/vulnerability-report/zap/:id", acl.Authorized(), controller.ZapReportDetailGET)
+	portal.Get("/vulnerability-report/openvas/:id", acl.Authorized(), controller.OpenVasReportDetailGET)
 
 	api.Post("/scan/start", acl.Authorized(), controller.StartScan)
 

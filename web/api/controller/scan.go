@@ -17,7 +17,10 @@ func StartScan(c *fiber.Ctx) error {
 
 	// First find total waiting scan count
 
-	var totalWaitingScanCount = model.GetWaitingTargetDomainCount()
+	var zapWaitingScanCount = model.GetWaitingZAPTargetDomainCount()
+	var openvasWaitingScanCount = model.GetWaitingOpenVASTargetDomainCount()
+
+	var totalWaitingScanCount = zapWaitingScanCount + openvasWaitingScanCount
 
 	requiredContainers := (totalWaitingScanCount + targetsPerContainer - 1) / targetsPerContainer // Round up to the nearest whole number
 
@@ -38,21 +41,40 @@ func StartScan(c *fiber.Ctx) error {
 	log.Println("Total running containers", len(containers))
 	log.Println("Required container count", requiredContainers)
 	if len(containers) < requiredContainers {
-		for i := 0; i < requiredContainers-len(containers); i++ {
+		zapContainersToStart := zapWaitingScanCount / targetsPerContainer
+		openvasContainersToStart := openvasWaitingScanCount / targetsPerContainer
+
+		for i := 0; i < zapContainersToStart; i++ {
 			imageName := "hunter_bounter_zapv1"
 			user := "root"
 			port := "5002:5002"
 			dns := "1.1.1.1"
 
 			containerID, err := dockerManager.RunContainer(imageName, user, port, dns)
-			log.Println("Running container ID", containerID)
+			log.Println("Running ZAP container ID", containerID)
 			if err != nil {
-				log.Println("Error while starting container", err)
-				return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while starting container", nil))
+				log.Println("Error while starting ZAP container", err)
+				return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while starting ZAP container", nil))
+			}
+		}
+
+		for i := 0; i < openvasContainersToStart; i++ {
+			imageName := "hunterbounter:openvasv1"
+
+			containerID, err := dockerManager.RunContainerNoCommand(imageName)
+			log.Println("Running OpenVAS container ID", containerID)
+			if err != nil {
+				log.Println("Error while starting OpenVAS container", err)
+				return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while starting OpenVAS container", nil))
 			}
 		}
 	}
+
 	lastContainersCount, err := dockerManager.ListRunningContainersViaImageName(DOCKER_DOMAIN_IMAGE_NAME) // List all running containers
+	if err != nil {
+		log.Println("Error while listing running containers", err)
+		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while listing running containers", nil))
+	}
 
 	log.Println("last container count", len(lastContainersCount))
 

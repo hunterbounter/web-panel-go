@@ -39,6 +39,11 @@ func ScanResultOpenVASPOST(c *fiber.Ctx) error {
 	if err != nil {
 		log.Println("Request Body:", string(c.Body()))
 
+		if string(c.Body()) == "" {
+			log.Println("Empty Body")
+			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Empty Body", nil))
+		}
+
 		log.Println("Error parsing request", err)
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error parsing request", nil))
 	}

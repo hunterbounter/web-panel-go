@@ -46,15 +46,18 @@ func SaveTelemetry(c *fiber.Ctx) error {
 	// Print telemetry data as map
 
 	var dbData = map[string]interface{}{
-		"hostname":          telemetry["hostname"],
-		"last_seen":         database.CurrentTime(),
-		"active_scan_count": telemetry["cpu"],
+		"hostname":  telemetry["hostname"],
+		"last_seen": database.CurrentTime(),
 	}
 	switch telemetry["telemetry_type"] {
 	case "zap":
 		dbData["type"] = 1 // 1 Zap 2 OpenVas 3 VPN
 		dbData["active_scan_count"] = telemetry["active_scan_count"]
 		dbData["service_status"] = telemetry["zap_status"]
+	case "openvas":
+		dbData["type"] = 2 // 1 Zap 2 OpenVas 3 VPN
+		dbData["active_scan_count"] = telemetry["active_scan_count"]
+		dbData["service_status"] = telemetry["openvas_status"]
 
 	}
 
