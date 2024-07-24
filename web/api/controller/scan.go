@@ -10,7 +10,8 @@ import (
 
 const DOCKER_DOMAIN_IMAGE_NAME = "hunter_bounter_zapv1"
 
-const MAX_DOCKER_CONTAINER_COUNT = 5
+const maxContainers = 5
+const targetsPerContainer = 10
 
 func StartScan(c *fiber.Ctx) error {
 
@@ -18,18 +19,26 @@ func StartScan(c *fiber.Ctx) error {
 
 	var totalWaitingScanCount = model.GetWaitingTargetDomainCount()
 
+	requiredContainers := (totalWaitingScanCount + targetsPerContainer - 1) / targetsPerContainer // Round up to the nearest whole number
+
+	if requiredContainers > maxContainers {
+		requiredContainers = maxContainers
+	}
+
 	dockerManager := hunterbounter_docker.NewDockerManager()
 
 	containers, err := dockerManager.ListRunningContainersViaImageName(DOCKER_DOMAIN_IMAGE_NAME) // List all running containers
 
-	log.Println(containers)
-	log.Println("Total running containers", len(containers))
+	if err != nil {
+		log.Println("Error while listing running containers", err)
+		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while listing running containers", nil))
+	}
 
-	// If the number of running containers is less than the max number of containers, start a new container until it is equalized
+	// If the number of running containers is less than the required number of containers, start new containers until it is equalized
 	log.Println("Total running containers", len(containers))
-	log.Println("Max container count", MAX_DOCKER_CONTAINER_COUNT)
-	if len(containers) < MAX_DOCKER_CONTAINER_COUNT {
-		for i := 0; i < MAX_DOCKER_CONTAINER_COUNT-len(containers); i++ {
+	log.Println("Required container count", requiredContainers)
+	if len(containers) < requiredContainers {
+		for i := 0; i < requiredContainers-len(containers); i++ {
 			imageName := "hunter_bounter_zapv1"
 			user := "root"
 			port := "5002:5002"
@@ -43,7 +52,6 @@ func StartScan(c *fiber.Ctx) error {
 			}
 		}
 	}
-
 	lastContainersCount, err := dockerManager.ListRunningContainersViaImageName(DOCKER_DOMAIN_IMAGE_NAME) // List all running containers
 
 	log.Println("last container count", len(lastContainersCount))

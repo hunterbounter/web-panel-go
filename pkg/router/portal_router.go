@@ -51,6 +51,8 @@ func (h HttpRouter) InstallRouter(app *fiber.App) {
 	*/
 	portal.Post("/scan_results/save", acl.Unauthorized(), controller.ScanResultPOST)
 
+	portal.Post("/scan_results/openvas/save", acl.Unauthorized(), controller.ScanResultOpenVASPOST)
+
 	api.Post("/agent/kill", acl.Authorized(), controller.KillAgent)
 
 	// Check if the server is up
