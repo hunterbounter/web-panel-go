@@ -90,6 +90,7 @@ func StartScan(c *fiber.Ctx) error {
 	// Type 1 Domain
 	// Status 0 Added
 	model.UpdateTargetsStatus(0, 1, 1)
+	model.UpdateTargetsStatus(0, 2, 1)
 
 	return c.JSON(hunterbounter_response.HunterBounterResponse(true, "Scan started", totalWaitingScanCount))
 }
