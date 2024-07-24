@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-const REMOVE_FROM_LIST_TIMEOUT = 300 // 5 minutes in seconds
+const REMOVE_FROM_LIST_TIMEOUT = 900 // 15 minutes in seconds
 
 /*
 	We are creating a map, if the scan_count is 0, it will be deleted after 5 minutes.
@@ -25,8 +25,7 @@ func workerDockerManager() {
 	var monitorData = model.GetMonitorData()
 
 	for _, monitor := range monitorData {
-		//FIXME :
-		continue
+
 		log.Println("workerMap : ", hunterbounter_json.ToStringBeautify(workerMap))
 		var hostname = monitor["hostname"].(string)
 		var lastSeen = monitor["last_seen"].(string) // 14.07.2024 19:51:05
