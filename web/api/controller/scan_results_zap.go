@@ -32,7 +32,7 @@ func CheckRecordIsExist(elemRecord map[string]interface{}) bool {
 
 func ScanResultPOST(c *fiber.Ctx) error {
 
-	log.Println("Scan Result Post")
+	log.Println("Scan Result Post (OpenVAS)")
 
 	var scanResult []map[string]interface{}
 	err := c.BodyParser(&scanResult)
@@ -50,10 +50,14 @@ func ScanResultPOST(c *fiber.Ctx) error {
 			continue
 		}
 
-		elemRecord["description"] = html.EscapeString(utils.SafeEscapeString(elemRecord["description"]))
-		elemRecord["solution"] = html.EscapeString(utils.SafeEscapeString(elemRecord["solution"]))
-		elemRecord["other"] = html.EscapeString(utils.SafeEscapeString(elemRecord["other"]))
+		//elemRecord["description"] = html.EscapeString(utils.SafeEscapeString(elemRecord["description"])) // deprecated
+		//elemRecord["solution"] = html.EscapeString(utils.SafeEscapeString(elemRecord["solution"])) // deprecated
+		//elemRecord["other"] = html.EscapeString(utils.SafeEscapeString(elemRecord["other"])) // deprecated
 		//json_string := hunterbounter_json.ToString(elemRecord)
+
+		for key, value := range elemRecord {
+			elemRecord[key] = html.EscapeString(utils.SafeEscapeString(value))
+		}
 
 		jsonData, err := json.Marshal(elemRecord)
 		if err != nil {
