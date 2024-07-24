@@ -35,6 +35,7 @@ func HunterBounterWeb() *fiber.App {
 	//env.SetupEnvFile()
 	engine := html.New(RunningDir()+"/views", ".html")
 
+	engine.Reload(true) // Şablon dosyalarını yeniden yükle
 	app := fiber.New(fiber.Config{Views: engine, BodyLimit: 500 * 1024 * 1024})
 
 	app.Use(recover.New())
