@@ -9,7 +9,7 @@ func SaveTarget(target string, elemType int, status int) {
 }
 
 func GetWaitingZAPTargetDomainCount() int {
-	var whereCondition = map[string]interface{}{"type": 2, "or_conditions": []string{"status = 0", "status = 1"}} // 0 Added 1 Waiting 2 Completed --- Type 1 Domain 2 IP
+	var whereCondition = map[string]interface{}{"type": 1, "or_conditions": []string{"status = 0", "status = 1"}} // 0 Added 1 Waiting 2 Completed --- Type 1 Domain 2 IP
 	dbRecords, err := database.Select("targets", whereCondition)
 	if err != nil {
 		return 0
@@ -18,7 +18,7 @@ func GetWaitingZAPTargetDomainCount() int {
 }
 
 func GetWaitingOpenVASTargetDomainCount() int {
-	var whereCondition = map[string]interface{}{"type": 1, "or_conditions": []string{"status = 0", "status = 1"}} // 0 Added 1 Waiting 2 Completed --- Type 1 Domain 2 IP
+	var whereCondition = map[string]interface{}{"type": 2, "or_conditions": []string{"status = 0", "status = 1"}} // 0 Added 1 Waiting 2 Completed --- Type 1 Domain 2 IP
 	dbRecords, err := database.Select("targets", whereCondition)
 	if err != nil {
 		return 0
