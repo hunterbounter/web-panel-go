@@ -22,7 +22,7 @@ func KillAgent(c *fiber.Ctx) error {
 
 	dockerManager := docker.NewDockerManager()
 
-	err = dockerManager.StopContainer(request.Hostname)
+	err = dockerManager.KillContainer(request.Hostname)
 	if err != nil {
 		log.Println("REMOVE CONTAINER ERROR", err)
 		return err
