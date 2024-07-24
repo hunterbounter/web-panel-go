@@ -304,6 +304,7 @@
                             </div>
                              
                             <div class="col-12 mt-3 d-flex justify-content-end">
+                                <button class="btn btn-success"><em class="icon ni ni-plus"></em><span>Savex</span></button>
                                 <button class="btn btn-success btn-save-target"><em class="icon ni ni-plus"></em><span>Save</span></button>
                             </div>
                         </div>
@@ -346,6 +347,8 @@
                     selectedAgents.push("ZapProxy");
                 }
 
+                selectedAgents = JSON.stringify(selectedAgents);
+
 
 
                 $.ajax({
@@ -358,10 +361,29 @@
                     success: function (data) {
                         console.log(data);
                         if (data.success) {
-                            alert("Targets added successfully");
-                            location.reload();
+                           swal({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result) {
+                                    location.reload();
+                                }
+                            });
                         } else {
-                            alert("Error adding targets");
+                            Swal.fire({
+                                title: 'Error!',
+                                text: data.message,
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result) {
+                                    // click btn
+                                    // stop reload
+
+                                }
+                            });
                         }
                     }
                 });
