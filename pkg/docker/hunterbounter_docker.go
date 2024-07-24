@@ -71,6 +71,19 @@ func (d *DockerManager) StopContainer(containerID string) error {
 	return nil
 }
 
+// kill container
+func (d *DockerManager) KillContainer(containerID string) error {
+	cmd := exec.Command("docker", "kill", "-t", "0", containerID)
+	log.Println("Full command: ", cmd.String())
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Println("Command output:", string(output))
+		return err
+	}
+	return nil
+
+}
+
 // RemoveContainer removes a container by ID.
 func (d *DockerManager) RemoveContainer(containerID string) error {
 	cmd := exec.Command("docker", "rm", "-f", containerID)
