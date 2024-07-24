@@ -56,13 +56,32 @@ func GetTargets(c *fiber.Ctx) error {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error parsing request", nil))
 	}
 
-	targetsResponse, err := database.Select("targets", map[string]interface{}{
-		"status": "1", // waiting
-		"type":   "1", // 1 domain, 2 ipv4
-	})
+	var targetsResponse []map[string]interface{}
+	targetsResponse = make([]map[string]interface{}, 0)
+	var err error
+	/*
+		ZAP = 1
+	*/
+	if request.DockerType == 1 {
 
-	if err != nil {
-		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error getting targets", nil))
+		targetsResponse, err = database.Select("targets", map[string]interface{}{
+			"status": "1", // waiting
+			"type":   "1", // 1 domain, 2 ipv4
+		})
+
+		if err != nil {
+			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error getting targets 1", nil))
+		}
+
+	} else if request.DockerType == 2 { // OpenVAS = 2
+		targetsResponse, err = database.Select("targets", map[string]interface{}{
+			"status": "1", // waiting
+			"type":   "2", // 1 domain, 2 ipv4
+		})
+
+		if err != nil {
+			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error getting targets 2", nil))
+		}
 	}
 
 	var targets []string
