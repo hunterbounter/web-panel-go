@@ -308,7 +308,9 @@ func ExecuteSql(query string) ([]map[string]interface{}, error) {
 	return ResultArray(query, map[string]interface{}{})
 }
 func Select(tableName string, whereData map[string]interface{}) ([]map[string]interface{}, error) {
-
+	/**
+	 * Map interface içinden gelen keyler ile Query oluşturuluyor.
+	 */
 	var selectQuery = "SELECT * FROM " + tableName + " "
 
 	if len(whereData) > 0 {
@@ -316,9 +318,12 @@ func Select(tableName string, whereData map[string]interface{}) ([]map[string]in
 	}
 	i := 0
 
+	// order by kontrolü
 	orderby := false
 	limit := false
-	for key := range whereData {
+	orConditions := []string{}
+
+	for key, value := range whereData {
 		// check is order by
 		if key == "order_by" {
 			orderby = true
@@ -329,12 +334,33 @@ func Select(tableName string, whereData map[string]interface{}) ([]map[string]in
 			limit = true
 			continue
 		}
+		// check if it's an OR condition
+		if key == "or_conditions" {
+			orConditions = value.([]string)
+			continue
+		}
 		if i == 0 {
 			selectQuery += key + "= :" + key
 		} else {
 			selectQuery += " AND " + key + "= :" + key
 		}
 		i++
+	}
+
+	// Add OR conditions if any
+	if len(orConditions) > 0 {
+		if i > 0 {
+			selectQuery += " AND ("
+		} else {
+			selectQuery += "("
+		}
+		for j, orCondition := range orConditions {
+			if j > 0 {
+				selectQuery += " OR "
+			}
+			selectQuery += orCondition
+		}
+		selectQuery += ")"
 	}
 
 	if orderby {
@@ -351,14 +377,13 @@ func Select(tableName string, whereData map[string]interface{}) ([]map[string]in
 }
 
 // formatSQLQuery wraps string values in single quotes for logging
-func formatSQLQuery(query string, data map[string]interface{}) string {
-	for key, value := range data {
-		switch value := value.(type) {
-		case string:
-			// Wrap string values in single quotes
-			quotedValue := fmt.Sprintf("'%s'", value)
-			query = strings.Replace(query, ":"+key, quotedValue, -1)
+func formatSQLQuery(query string, args map[string]interface{}) string {
+	for k, v := range args {
+		valueStr := fmt.Sprintf("%v", v)
+		if _, ok := v.(string); ok {
+			valueStr = fmt.Sprintf("'%v'", v)
 		}
+		query = strings.Replace(query, ":"+k, valueStr, -1)
 	}
 	return query
 }

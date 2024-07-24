@@ -15,7 +15,12 @@ func DashboardGET(c *fiber.Ctx) error {
 
 	var monitorData = model.GetMonitorData()
 
-	var totalWaitingScanCount = model.GetWaitingTargetDomainCount()
+	var totalWaitingScanCount int
+	var zapWaitingDomainCount = model.GetWaitingZAPTargetDomainCount()
+
+	var openvasWaitingDomainCount = model.GetWaitingOpenVASTargetDomainCount()
+
+	totalWaitingScanCount = zapWaitingDomainCount + openvasWaitingDomainCount
 
 	var totalScannedTargetCount = model.GetTotalScannedTargetCount()
 
@@ -50,12 +55,20 @@ func SaveTarget(c *fiber.Ctx) error {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
 	}
 
+	var isZap, isOpenVas bool
 	for _, agent := range selectedAgentList {
 		if agent == "" {
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
 		}
 		if agent != "OpenVas" && agent != "ZapProxy" {
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
+		}
+		if agent == "OpenVas" {
+			isOpenVas = true
+		}
+		if agent == "ZapProxy" {
+			isZap = true
+
 		}
 
 	}
@@ -72,9 +85,17 @@ func SaveTarget(c *fiber.Ctx) error {
 
 	for _, target := range targetsList {
 		// Save target to database
-		isValidDomain := utils.IsValidDomain(target)
-		if isValidDomain {
-			model.SaveTarget(target, 1, 0) // Domain And Added
+		if isZap {
+			isValidDomain := utils.IsValidDomain(target)
+			if isValidDomain {
+				model.SaveTarget(target, 1, 0) // Domain And Added
+			}
+		}
+		if isOpenVas {
+			isValidIP := utils.IsValidIP(target)
+			if isValidIP {
+				model.SaveTarget(target, 2, 0) // IP And Added
+			}
 		}
 
 	}
