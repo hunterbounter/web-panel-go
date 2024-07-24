@@ -25,6 +25,8 @@ func workerDockerManager() {
 	var monitorData = model.GetMonitorData()
 
 	for _, monitor := range monitorData {
+		//FIXME :
+		continue
 		log.Println("workerMap : ", hunterbounter_json.ToStringBeautify(workerMap))
 		var hostname = monitor["hostname"].(string)
 		var lastSeen = monitor["last_seen"].(string) // 14.07.2024 19:51:05
