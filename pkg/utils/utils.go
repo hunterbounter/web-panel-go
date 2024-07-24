@@ -35,6 +35,13 @@ func IsValidDomain(domain string) bool {
 	return domainRegex.MatchString(domain)
 }
 
+func IsValidIP(ip string) bool {
+	// Regular expression for validating an IP address
+	var ipRegex = regexp.MustCompile(`^(\d{1,3}\.){3}\d{1,3}$`)
+	return ipRegex.MatchString(ip)
+
+}
+
 // abc
 // SafeEscapeString safely escapes a value if it's a string. Returns an empty string if the value is nil or not a string.
 func SafeEscapeString(value interface{}) string {
