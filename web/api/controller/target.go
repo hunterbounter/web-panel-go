@@ -82,6 +82,11 @@ func GetTargets(c *fiber.Ctx) error {
 		if err != nil {
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error getting targets 2", nil))
 		}
+	} else if request.DockerType == 3 { // nuclei = 3
+		targetsResponse, err = database.Select("targets", map[string]interface{}{
+			"status": "1", // waiting
+			"type":   "3", // 1 domain, 2 ipv4
+		})
 	}
 
 	var targets []string

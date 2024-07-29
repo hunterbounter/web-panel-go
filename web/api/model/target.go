@@ -26,6 +26,16 @@ func GetWaitingOpenVASTargetDomainCount() int {
 	return len(dbRecords)
 }
 
+func GetWaitingNucleiTargetDomainCount() int {
+	var whereCondition = map[string]interface{}{"type": 3, "or_conditions": []string{"status = 0", "status = 1"}} // 0 Added 1 Waiting 2 Completed --- Type 1 Domain 2 IP
+	dbRecords, err := database.Select("targets", whereCondition)
+	if err != nil {
+		return 0
+	}
+	return len(dbRecords)
+
+}
+
 func GetTotalScannedTargetCount() int {
 	var whereCondition = map[string]interface{}{"status": 2} // 0 Added 1 Waiting 2 Completed --- Type 1 Domain 2 IP
 	dbRecords, err := database.Select("targets", whereCondition)
