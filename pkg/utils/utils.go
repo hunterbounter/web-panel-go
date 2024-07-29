@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"html"
 	"log"
+	"net"
+	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -30,9 +32,43 @@ func TimeToString(t time.Time) string {
 }
 
 func IsValidDomain(domain string) bool {
-	// Regular expression for validating a domain name
-	var domainRegex = regexp.MustCompile(`^(?i)[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\.[a-z]{2,})+$`)
-	return domainRegex.MatchString(domain)
+
+	// ilk normal domain mi diye kontrol et
+
+	// Regular expression for validating domain name
+	const domainPattern = `^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,6}$`
+	domainRegex := regexp.MustCompile(domainPattern)
+
+	// Parse the URL
+	parsedURL, err := url.Parse(domain)
+	if err != nil {
+		fmt.Println("Invalid URL:", err)
+		return false
+	}
+
+	// Check the scheme
+	if parsedURL.Scheme != "http" && parsedURL.Scheme != "https" {
+		fmt.Println("Invalid scheme:", parsedURL.Scheme)
+		return false
+	}
+
+	// Check if host is valid
+	host := parsedURL.Hostname()
+	if !domainRegex.MatchString(host) {
+		fmt.Println("Invalid domain:", host)
+		return false
+	}
+
+	// Check if port is valid (if provided)
+	if parsedURL.Port() != "" {
+		port := parsedURL.Port()
+		if _, err := net.LookupPort("tcp", port); err != nil {
+			fmt.Println("Invalid port:", port)
+			return false
+		}
+	}
+
+	return true
 }
 
 func IsValidIP(ip string) bool {

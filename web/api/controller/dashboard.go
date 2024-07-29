@@ -20,7 +20,9 @@ func DashboardGET(c *fiber.Ctx) error {
 
 	var openvasWaitingDomainCount = model.GetWaitingOpenVASTargetDomainCount()
 
-	totalWaitingScanCount = zapWaitingDomainCount + openvasWaitingDomainCount
+	var nucleiWaitingDomainCount = model.GetWaitingNucleiTargetDomainCount()
+
+	totalWaitingScanCount = zapWaitingDomainCount + openvasWaitingDomainCount + nucleiWaitingDomainCount
 
 	var totalScannedTargetCount = model.GetTotalScannedTargetCount()
 
@@ -55,12 +57,12 @@ func SaveTarget(c *fiber.Ctx) error {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
 	}
 
-	var isZap, isOpenVas bool
+	var isZap, isOpenVas, isNuclei bool
 	for _, agent := range selectedAgentList {
 		if agent == "" {
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
 		}
-		if agent != "OpenVas" && agent != "ZapProxy" {
+		if agent != "OpenVas" && agent != "ZapProxy" && agent != "Nuclei" {
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
 		}
 		if agent == "OpenVas" {
@@ -68,10 +70,16 @@ func SaveTarget(c *fiber.Ctx) error {
 		}
 		if agent == "ZapProxy" {
 			isZap = true
+		}
+		if agent == "Nuclei" {
+			isNuclei = true
 
 		}
 
 	}
+
+	log.Println("isZap : ", isZap)
+	log.Println("isOpenVas : ", isOpenVas)
 
 	targetsRaw := c.FormValue("targets")
 	if targetsRaw == "" {
@@ -85,16 +93,33 @@ func SaveTarget(c *fiber.Ctx) error {
 
 	for _, target := range targetsList {
 		// Save target to database
+		log.Println("Target : ", target)
 		if isZap {
+
+			// check is start http or https
+			if target[:4] == "http" || target[:5] == "https" {
+				model.SaveTarget(target, 1, 0) // Domain And Added
+			}
+
 			isValidDomain := utils.IsValidDomain(target)
 			if isValidDomain {
 				model.SaveTarget(target, 1, 0) // Domain And Added
 			}
+
 		}
 		if isOpenVas {
 			isValidIP := utils.IsValidIP(target)
 			if isValidIP {
 				model.SaveTarget(target, 2, 0) // IP And Added
+			}
+		}
+		if isNuclei {
+			var isValid bool
+			if utils.IsValidDomain(target) || utils.IsValidIP(target) {
+				isValid = true
+			}
+			if isValid {
+				model.SaveTarget(target, 3, 0) // Nuclei And Added
 			}
 		}
 

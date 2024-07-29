@@ -58,6 +58,10 @@ func SaveTelemetry(c *fiber.Ctx) error {
 		dbData["type"] = 2 // 1 Zap 2 OpenVas 3 VPN
 		dbData["active_scan_count"] = telemetry["active_scan_count"]
 		dbData["service_status"] = telemetry["openvas_status"]
+	case "nuclei":
+		dbData["type"] = 3 // 1 Zap 2 OpenVas 3 nuclei
+		dbData["active_scan_count"] = telemetry["active_scan_count"]
+		dbData["service_status"] = telemetry["nuclei_status"]
 
 	}
 
