@@ -285,8 +285,8 @@
                                     <div class="preview-block">
 
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input"  id="OpenVas">
-                                            <label class="custom-control-label" for="OpenVas">OpenVAS</label>
+                                            <input type="checkbox" class="custom-control-input"  id="ZapProxy">
+                                            <label class="custom-control-label" for="ZapProxy">ZAP Proxy</label>
                                         </div>
                                     </div>
                                 </div>
@@ -294,18 +294,28 @@
                                     <div class="preview-block">
 
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input"  id="ZapProxy">
-                                            <label class="custom-control-label" for="ZapProxy">ZAP Proxy</label>
+                                            <input type="checkbox" class="custom-control-input"  id="OpenVas">
+                                            <label class="custom-control-label" for="OpenVas">OpenVAS</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 mt-2">
+                                    <div class="preview-block">
+
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"  id="Nuclei">
+                                            <label class="custom-control-label" for="Nuclei">Nuclei</label>
                                         </div>
                                     </div>
                                 </div>
 
 
+
+
                             </div>
                              
                             <div class="col-12 mt-3 d-flex justify-content-end">
-                                <button class="btn btn-success"><em class="icon ni ni-plus"></em><span>Savex</span></button>
-                                <button class="btn btn-success btn-save-target"><em class="icon ni ni-plus"></em><span>Save</span></button>
+                                 <button class="btn btn-success btn-save-target"><em class="icon ni ni-plus"></em><span>Save</span></button>
                             </div>
                         </div>
                     </div><!-- .nk-block -->
@@ -346,6 +356,9 @@
                 if ($("#ZapProxy").is(":checked")) {
                     selectedAgents.push("ZapProxy");
                 }
+                if ($("#Nuclei").is(":checked")) {
+                    selectedAgents.push("Nuclei");
+                }
 
                 selectedAgents = JSON.stringify(selectedAgents);
 
@@ -361,7 +374,7 @@
                     success: function (data) {
                         console.log(data);
                         if (data.success) {
-                           swal({
+                           swal.fire({
                                 title: 'Success!',
                                 text: data.message,
                                 icon: 'success',
