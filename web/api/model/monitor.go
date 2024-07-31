@@ -4,7 +4,7 @@ import "hunterbounter.com/web-panel/pkg/database"
 
 func GetMonitorData() []map[string]interface{} {
 	var viewMonitorSql = `
-	select * from VIEW_MONITOR 
+	select * from VIEW_MONITOR order by hostname asc
 	 
 `
 
