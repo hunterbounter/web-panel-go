@@ -31,6 +31,16 @@ func TimeToString(t time.Time) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
+func IsValidDomainNormal(domain string) bool {
+
+	// ilk normal domain mi diye kontrol et
+
+	// Regular expression for validating domain name
+	const domainPattern = `^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,6}$`
+	return regexp.MustCompile(domainPattern).MatchString(domain)
+
+}
+
 func IsValidDomain(domain string) bool {
 
 	// ilk normal domain mi diye kontrol et
