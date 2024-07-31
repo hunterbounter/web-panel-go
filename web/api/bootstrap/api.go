@@ -45,6 +45,18 @@ func HunterBounterWeb() *fiber.App {
 			XSSProtection: "1; mode=block",
 		}))
 
+	app.Use("/uploads", func(c *fiber.Ctx) error {
+		allowedExtensions := map[string]bool{
+			".apk": true,
+			".ipa": true,
+		}
+
+		if _, allowed := allowedExtensions[filepath.Ext(c.Path())]; !allowed {
+			return fiber.ErrForbidden
+		}
+		return c.Next()
+	})
+
 	// Set the log output
 	log.SetOutput(os.Stdout)
 
@@ -52,6 +64,8 @@ func HunterBounterWeb() *fiber.App {
 	app.Static("/", RunningDir()+"/views/statics")
 
 	app.Get("/sys", monitor.New())
+
+	app.Static("/uploads", RunningDir()+"/uploads")
 
 	router.InstallRouter(app)
 
