@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
+	"hunterbounter.com/web-panel/internal"
 	"log"
 	"strings"
 	"time"
@@ -183,7 +184,9 @@ func Insert(tableName string, data map[string]interface{}, generateUUID bool) (i
 		return nil, errors.New("insert interface is null")
 	}
 
-	log.Printf("SQL : %s\n", insertQuery)
+	if internal.SQL_DEBUG {
+		logQuery(insertQuery)
+	}
 
 	insertResult, err := SQL.Exec(insertQuery)
 	if err != nil {
@@ -296,7 +299,10 @@ func ExecuteSql(query string) ([]map[string]interface{}, error) {
 	sqlString := strings.ReplaceAll(query, "\n", "\\n")
 	//remove \n to blank
 	sqlString = strings.ReplaceAll(sqlString, "\\n", " ")
-	log.Println(sqlString)
+	if internal.SQL_DEBUG {
+		log.Println("Executing SQL Query: " + sqlString)
+
+	}
 
 	if strings.Contains(query, "truncate") {
 
@@ -371,7 +377,9 @@ func Select(tableName string, whereData map[string]interface{}) ([]map[string]in
 	}
 
 	// Log the SQL query with values, wrapping string values in single quotes
-	log.Printf("Executing SQL Query: %s\n", formatSQLQuery(selectQuery, whereData))
+	if internal.SQL_DEBUG {
+		log.Printf("Executing SQL Query: %s\n", formatSQLQuery(selectQuery, whereData))
+	}
 
 	return ResultArray(selectQuery, whereData)
 }
