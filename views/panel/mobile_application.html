@@ -13,7 +13,125 @@
         margin-top: 20px;
 
     }
-    .fullPageLoading{display:none;position:fixed;z-index:2147483640;height:2em;width:2em;overflow:show;margin:auto;top:0;left:0;bottom:0;right:0}.fullPageLoading:before{content:'';display:block;position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(rgba(20,20,20,.8),rgba(0,0,0,.6));background:-webkit-radial-gradient(rgba(20,20,20,.8),rgba(0,0,0,.6))}.fullPageLoading:not(:required){font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.fullPageLoading:not(:required):after{content:'';display:block;font-size:10px;width:1em;height:1em;margin-top:-.5em;-webkit-animation:spinner 150ms infinite linear;-moz-animation:spinner 150ms infinite linear;-ms-animation:spinner 150ms infinite linear;-o-animation:spinner 150ms infinite linear;animation:spinner 150ms infinite linear;border-radius:.5em;-webkit-box-shadow:rgba(255,255,255,0.75) 1.5em 0 0 0,rgba(255,255,255,0.75) 1.1em 1.1em 0 0,rgba(255,255,255,0.75) 0 1.5em 0 0,rgba(255,255,255,0.75) -1.1em 1.1em 0 0,rgba(255,255,255,0.75) -1.5em 0 0 0,rgba(255,255,255,0.75) -1.1em -1.1em 0 0,rgba(255,255,255,0.75) 0 -1.5em 0 0,rgba(255,255,255,0.75) 1.1em -1.1em 0 0;box-shadow:rgba(255,255,255,0.75) 1.5em 0 0 0,rgba(255,255,255,0.75) 1.1em 1.1em 0 0,rgba(255,255,255,0.75) 0 1.5em 0 0,rgba(255,255,255,0.75) -1.1em 1.1em 0 0,rgba(255,255,255,0.75) -1.5em 0 0 0,rgba(255,255,255,0.75) -1.1em -1.1em 0 0,rgba(255,255,255,0.75) 0 -1.5em 0 0,rgba(255,255,255,0.75) 1.1em -1.1em 0 0}@-webkit-keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}
+
+    .fullPageLoading {
+        display: none;
+        position: fixed;
+        z-index: 2147483640;
+        height: 2em;
+        width: 2em;
+        overflow: show;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0
+    }
+
+    .fullPageLoading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .6));
+        background: -webkit-radial-gradient(rgba(20, 20, 20, .8), rgba(0, 0, 0, .6))
+    }
+
+    .fullPageLoading:not(:required) {
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0
+    }
+
+    .fullPageLoading:not(:required):after {
+        content: '';
+        display: block;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        margin-top: -.5em;
+        -webkit-animation: spinner 150ms infinite linear;
+        -moz-animation: spinner 150ms infinite linear;
+        -ms-animation: spinner 150ms infinite linear;
+        -o-animation: spinner 150ms infinite linear;
+        animation: spinner 150ms infinite linear;
+        border-radius: .5em;
+        -webkit-box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0;
+        box-shadow: rgba(255, 255, 255, 0.75) 1.5em 0 0 0, rgba(255, 255, 255, 0.75) 1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) 0 1.5em 0 0, rgba(255, 255, 255, 0.75) -1.1em 1.1em 0 0, rgba(255, 255, 255, 0.75) -1.5em 0 0 0, rgba(255, 255, 255, 0.75) -1.1em -1.1em 0 0, rgba(255, 255, 255, 0.75) 0 -1.5em 0 0, rgba(255, 255, 255, 0.75) 1.1em -1.1em 0 0
+    }
+
+    @-webkit-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @-moz-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @-o-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
+
+    @keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg)
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg)
+        }
+    }
 </style>
 <div class="fullPageLoading">Loading&#8230;</div>
 
@@ -36,7 +154,7 @@
                                 <div class="nk-block-head-content">
                                     <h3 class="nk-block-title page-title">Mobile Application Scan</h3>
                                     <div class="nk-block-des text-soft">
-                                        <p>Scan your mobile application </p>                                    </div>
+                                        <p>Scan your mobile application </p></div>
                                 </div><!-- .nk-block-head-content -->
                                 <li class="nk-block-tools-opt">
 
@@ -48,11 +166,10 @@
                                         <div class="toggle-expand-content" data-content="pageMenu">
                                             <ul class="nk-block-tools g-3">
                                                 <li class="nk-block-tools-opt">
-                                                    <a href="#"
-                                                       class="toggle btn btn-warning d-none d-md-inline-flex btn-start"
-                                                       style="padding-right: 10px; margin-right: 20px;"><em
-                                                            class="icon ni ni-plus"></em><span>Start </span></a>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newScanModal">New Scan</button>
+
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#newScanModal">New Scan
+                                                    </button>
 
 
                                                 </li>
@@ -65,54 +182,114 @@
                         <div class="nk-block">
 
 
-                                <div class="row mt-5">
+                            <div class="row mt-5">
 
-                                    <div class="table-card ">
-
-
-                                        <table class="table table-ulogs table-leak-data">
-                                            <thead class="table-light">
-                                            <tr>
-
-                                                <th class="tb-col-ip"><span class="overline-title">Scan Name</span></th>
-                                                <th class="tb-col-time"><span class="overline-title">Package Name</span></th>
-                                                <th class="tb-col-time"><span class="overline-title">Version Name</span></th>
-                                                <th class="tb-col-time"><span class="overline-title">MD5</span></th>
-                                                <th class="tb-col-time"><span class="overline-title">Action</span></th>
-
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td class="tb-col-os">com.example.app</td>
-                                                <td class="tb-col-ip">com.example.app</td>
-                                                <td class="tb-col-time">1.0</td>
-                                                <td class="tb-col-time">1234567890</td>
-                                                <td class="tb-col-time"><a href="#" class="btn btn-sm btn-primary">Report</a></td>
-
-                                            </tbody>
-                                        </table>
-
-                                    </div><!-- .card-preview -->
+                                <div class="table-card ">
 
 
-                                </div>
+                                    <table class="table table-ulogs table-leak-data">
+                                        <thead class="table-light">
+                                        <tr>
+
+                                            <th class="tb-col-ip"><span class="overline-title">Scan Name</span></th>
+                                            <th class="tb-col-ip"><span class="overline-title">File Name</span></th>
+                                            <th class="tb-col-time"><span class="overline-title">Package Name</span>
+                                            </th>
+                                            <th class="tb-col-time"><span class="overline-title">Version Name</span>
+                                            </th>
+                                            <th class="tb-col-time"><span class="overline-title">MD5</span></th>
+                                            <th class="tb-col-time"><span class="overline-title">Status</span></th>
+                                            <th class="tb-col-time"><span class="overline-title">Action</span></th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {{range .MobileScanList}}
+                                        <tr>
+                                            <td class="tb-col-os">{{.scan_name}}</td>
+                                            <td class="tb-col-os">{{.file_name}}</td>
+                                            <td class="tb-col-ip">{{.package_name}}</td>
+                                            <td class="tb-col-time">{{.version_name}}</td>
+                                            <td class="tb-col-time">{{.md5}}</td>
+                                            {{if eq .status "Waiting"}}
+                                            <td class="tb-col-time"><span class="badge badge-dot badge-dot-xs badge-warning">Waiting</span></td>
+                                            {{else if eq .status "Scanning"}}
+                                            <td class="tb-col-time"><span class="badge badge-dot badge-dot-xs badge-info">Scanning</span></td>
+                                            {{else if eq .status "Completed"}}
+                                            <td class="tb-col-time"><span class="badge badge-dot badge-dot-xs badge-success">Completed</span></td>
+                                            {{end}}
+                                            {{if  eq .status "Completed"}}
+                                            <td class="tb-col-time"><a href="https://panel.hunterbounter.com{{.pdf_file}}">Download Report</a></td>
+                                            {{else}}
+                                            <td class="tb-col-time">-</td>
+                                            {{end}}
+
+
+                                        </tbody>
+                                        {{end}}
+                                    </table>
+
+                                </div><!-- .card-preview -->
+
+
                             </div>
                         </div>
-
-
                     </div>
+
+
                 </div>
             </div>
-
-
         </div>
-        <!-- content @e -->
-        <!-- footer.html @s -->
-        {{template "partials/footer" .}}
-        <!-- footer.html @e -->
+
+
+        <div class="modal fade" id="newScanModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Scan Info</h5>
+                        <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <em class="icon ni ni-cross"></em>
+                        </a>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="form-label">Scan Name</label>
+                            <div class="form-control-wrap">
+                                <input type="text" class="form-control" id="scan-name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Application File</label>
+                            <div class="form-control-wrap">
+                                <input type="file" class="form-control" id="fileUpload"></div>
+                        </div>
+
+                        <!-- progress bar -->
+                        <div class="progress progress-sm display-none">
+                            <div class="progress-bar" data-progress="0"></div>
+                        </div>
+
+                        <div class="nk-modal-action justify-end">
+                            <ul class="btn-toolbar g-4 align-center">
+                                <li><a href="#" class="link link-primary">Cancel</a></li>
+                                <li>
+                                    <button class="btn btn-primary btn-save-start">Save & Start</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
-    <!-- wrap @e -->
+    <!-- content @e -->
+    <!-- footer.html @s -->
+    {{template "partials/footer" .}}
+    <!-- footer.html @e -->
+</div>
+<!-- wrap @e -->
 </div>
 <!-- app-root @e -->
 
@@ -134,48 +311,76 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.j
 <script>
     $(document).ready(function () {
 
-        function clearTable() {
-            $(".table-leak-data tbody").empty();
 
-        }
 
-        $('.btn-search').click(function () {
-            var query = $("#query").val();
-            // ajax post request
+        $('.btn-save-start').click(function () {
+            var scanName = $("#scan-name").val();
+            var fileUpload = $("#fileUpload").val();
+            var requestJson = {
+                scan_name: scanName
+            };
+
+            if (scanName == "") {
+                swal.fire({
+                    title: "Error",
+                    text: "Please enter scan name",
+                    icon: "error",
+                    button: "Ok"
+                });
+                return;
+            }
+
+            if ($('#fileUpload')[0].files[0] == null) {
+                swal.fire({
+                    title: "Error",
+                    text: "Please select a file",
+                    icon: "error",
+                    button: "Ok"
+                });
+                return;
+            }
+            var fileUploadBinary = $('#fileUpload')[0].files[0];
+
+            var formData = new FormData();
+            Object.keys(requestJson).forEach(key => {
+                formData.append(key, requestJson[key]);
+            });
+
+            if (fileUpload != null) {
+                formData.append("file", fileUploadBinary);
+            }
+
             $.ajax({
                 type: "POST",
-                url: "/leak-data",
-                data: {query: query},
+                url: "/mobile-scan/upload",
+                data: formData,
+                contentType: false,
+                processData: false,
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total * 100;
+                            console.log('Upload Progress: ' + percentComplete.toFixed(2) + '%');
+                            $('.progress').removeClass('display-none');
+                            $('.progress-bar').css('width', percentComplete.toFixed(2) + '%');
+                        }
+                    }, false);
+                    return xhr;
+                },
                 beforeSend: function () {
                     $(".fullPageLoading").show();
                 },
                 success: function (data) {
                     if (data.success) {
-                        clearTable();
-                        for (var i = 0; i < data.data.data.length; i++) {
-                            var row = "<tr><td class='tb-col-os'>" + data.data.data[i].url + "</td><td class='tb-col-ip' style='filter: blur(3px);'><span class='sub-text'>" + data.data.data[i].username + "</span></td><td class='tb-col-time' style='filter: blur(3px);'><span class='sub-text'>" + data.data.data[i].password + "</span></td></tr>";
-                            $(".table-leak-data tbody").append(row);
-                        }
-
-                        if (data.data.total_leaks >= 13) {
-                            $("#example-alert").removeClass("display-none");
-                        } else {
-                            $("#example-alert").addClass("display-none");
-                        }
-
-                        // remove display-none
-                        $(".table-card").removeClass("display-none");
-
-                        $(".white-intel").removeClass("display-none");
-
-                        $('#total-leaks').removeClass("display-none");
-                        if (data.data.total_leaks > 99){
-                            $(".total-leaks-count").text(data.data.total_leaks + "+");
-                        }else{
-                            $(".total-leaks-count").text(data.data.total_leaks);
-                        }
-
-
+                        swal.fire({
+                            title: "Success",
+                            text: data.message,
+                            icon: "success",
+                            button: "Ok"
+                        }).then(function () {
+                            location.reload();
+                        });
                     } else {
                         swal.fire({
                             title: "Error",
@@ -192,12 +397,15 @@ https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.j
                         icon: "error",
                         button: "Ok"
                     });
-                },complete: function () {
+                },
+                complete: function () {
                     $(".fullPageLoading").hide();
+                    $('.progress').addClass('display-none');
                 }
-
             });
         });
+
+
 
     });
 </script>
