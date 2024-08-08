@@ -1,9 +1,14 @@
 package utils
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
+	"github.com/google/uuid"
 	"html"
+	"io"
 	"log"
+	"mime/multipart"
 	"net"
 	"net/url"
 	"os"
@@ -39,6 +44,22 @@ func IsValidDomainNormal(domain string) bool {
 	const domainPattern = `^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,6}$`
 	return regexp.MustCompile(domainPattern).MatchString(domain)
 
+}
+
+// GenerateMD5 calculates the MD5 hash of the provided file.
+func GenerateMD5(file *multipart.FileHeader) (string, error) {
+	f, err := file.Open()
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+
+	hasher := md5.New()
+	if _, err := io.Copy(hasher, f); err != nil {
+		return "", err
+	}
+
+	return hex.EncodeToString(hasher.Sum(nil)), nil
 }
 
 func IsValidDomain(domain string) bool {
@@ -114,6 +135,11 @@ func GetString(value interface{}) string {
 	}
 
 	return str
+}
+
+func GenerateUUID() string {
+	id := uuid.New()
+	return id.String()
 }
 
 func RunningDir() string {
