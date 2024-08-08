@@ -62,7 +62,10 @@ func SaveTelemetry(c *fiber.Ctx) error {
 		dbData["type"] = 3 // 1 Zap 2 OpenVas 3 nuclei
 		dbData["active_scan_count"] = telemetry["active_scan_count"]
 		dbData["service_status"] = telemetry["nuclei_status"]
-
+	case "mobsf":
+		dbData["type"] = 4 // 1 Zap 2 OpenVas 3 nuclei
+		dbData["active_scan_count"] = telemetry["active_scan_count"]
+		dbData["service_status"] = telemetry["mobsf_status"]
 	}
 
 	if CheckTelemetryIsExists(telemetry["hostname"].(string)) {
