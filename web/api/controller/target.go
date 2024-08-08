@@ -87,6 +87,23 @@ func GetTargets(c *fiber.Ctx) error {
 			"status": "1", // waiting
 			"type":   "3", // 1 domain, 2 ipv4
 		})
+	} else if request.DockerType == 4 { // mobfs = 4
+		targetsResponse, err = database.Select("mobile_application_results", map[string]interface{}{
+			"status": "1", // waiting
+		})
+		var mobfsTargets []string
+		for _, target := range targetsResponse {
+			mobfsTargets = append(mobfsTargets, "https://panel.hunterbounter.com"+target["app_dir"].(string))
+			// Update the status of the targets to running
+			database.Update("mobile_application_results", map[string]interface{}{
+				"status": "2", // running
+			}, map[string]interface{}{
+				"id": target["id"],
+			})
+		}
+
+		// send for mobfs
+		return c.JSON(hunterbounter_response.HunterBounterResponse(true, "Targets", TargetResponse{Targets: mobfsTargets}))
 	}
 
 	var targets []string
