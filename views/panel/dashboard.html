@@ -4,108 +4,121 @@
 {{template "partials/head" .}}
 
 <body class="nk-body npc-invest npc-default has-aside no-touch nk-nio-theme dark-mode">
-    <div class="nk-app-root">
-        <!-- wrap @s -->
-        <div class="nk-wrap ">
-            <!-- main header @s -->
-            {{template "partials/header" .}}
+<div class="nk-app-root">
+    <!-- wrap @s -->
+    <div class="nk-wrap ">
+        <!-- main header @s -->
+        {{template "partials/header" .}}
 
-            <!-- main header @e -->
-            <!-- content @s -->
-            <div class="nk-content nk-content-fluid">
-                <div class="container-xl wide-xl">
-                    <div class="nk-content-inner">
-                        <div class="nk-content-body">
-                            <div class="nk-block-head nk-block-head-sm">
-                                <div class="nk-block-between">
-                                    <div class="nk-block-head-content">
-                                        <h3 class="nk-block-title page-title">Dashboard</h3>
-                                        <div class="nk-block-des text-soft">
-                                            <p>Monitor system status. You can get an overview of scans.</p>
+        <!-- main header @e -->
+        <!-- content @s -->
+        <div class="nk-content nk-content-fluid">
+            <div class="container-xl wide-xl">
+                <div class="nk-content-inner">
+                    <div class="nk-content-body">
+                        <div class="nk-block-head nk-block-head-sm">
+                            <div class="nk-block-between">
+                                <div class="nk-block-head-content">
+                                    <h3 class="nk-block-title page-title">Dashboard</h3>
+                                    <div class="nk-block-des text-soft">
+                                        <p>Monitor system status. You can get an overview of scans.</p>
+                                    </div>
+                                </div><!-- .nk-block-head-content -->
+                                <li class="nk-block-tools-opt">
+
+                                </li>
+                                <div class="nk-block-head-content">
+                                    <div class="toggle-wrap nk-block-tools-toggle">
+                                        <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
+                                           data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                        <div class="toggle-expand-content" data-content="pageMenu">
+                                            <ul class="nk-block-tools g-3">
+                                                <li class="nk-block-tools-opt">
+                                                    <a href="#"
+                                                       class="toggle btn btn-warning d-none d-md-inline-flex btn-start"
+                                                       style="padding-right: 10px; margin-right: 20px;"><em
+                                                            class="icon ni ni-plus"></em><span>Start </span></a>
+                                                    <a href="#" data-target="addTarget"
+                                                       class="toggle btn btn-primary d-none d-md-inline-flex"><em
+                                                            class="icon ni ni-plus"></em><span>Add Target</span></a>
+
+                                                </li>
+                                            </ul>
+                                        </div><!-- .toggle-expand-content -->
+                                    </div><!-- .toggle-wrap -->
+                                </div><!-- .nk-block-head-content -->
+                            </div><!-- .nk-block-between -->
+                        </div><!-- .nk-block-head -->
+                        <div class="nk-block">
+                            <div class="row g-gs">
+                                <div class="col-md-4">
+                                    <div class="card card-bordered card-full">
+                                        <div class="card-inner">
+                                            <div class="card-title-group align-start mb-0">
+                                                <div class="card-title">
+                                                    <h6 class="subtitle">Total Report Count</h6>
+                                                </div>
+                                                <div class="card-tools">
+                                                    <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip"
+                                                        data-bs-placement="left"
+                                                        title="Total Vulnerabilities Scanned For All Targets"></em>
+                                                </div>
+                                            </div>
+                                            <div class="card-amount">
+                                                <span class="amount">  {{.TotalReportCount}} </span>
+                                                </span>
+                                            </div>
+                                            <div class="invest-data">
+                                                <div class="invest-data-amount g-2">
+                                                    <div class="invest-data-history">
+                                                        <div class="title">PDF Count</div>
+                                                        <div class="amount">31</div>
+                                                    </div>
+                                                    <div class="invest-data-history">
+                                                        <div class="title">This Week</div>
+                                                        <div class="amount">3,010</div>
+                                                    </div>
+                                                </div>
+                                                <div class="invest-data-ck">
+                                                    <canvas class="iv-data-chart" id="totalDeposit"></canvas>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div><!-- .nk-block-head-content -->
-                                    <li class="nk-block-tools-opt">
-                                       
-                                    </li>
-                                    <div class="nk-block-head-content">
-                                        <div class="toggle-wrap nk-block-tools-toggle">
-                                            <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
-                                            <div class="toggle-expand-content" data-content="pageMenu">
-                                                <ul class="nk-block-tools g-3">
-                                                    <li class="nk-block-tools-opt">
-                                                        <a href="#"  class="toggle btn btn-warning d-none d-md-inline-flex btn-start" style="padding-right: 10px; margin-right: 20px;"><em class="icon ni ni-plus"></em><span>Start </span></a>
-                                                        <a href="#" data-target="addTarget" class="toggle btn btn-primary d-none d-md-inline-flex"><em class="icon ni ni-plus"></em><span>Add Target</span></a>
-                                                  
-                                                    </li>
-                                                </ul>
-                                            </div><!-- .toggle-expand-content -->
-                                        </div><!-- .toggle-wrap -->
-                                    </div><!-- .nk-block-head-content -->
-                                </div><!-- .nk-block-between -->
-                            </div><!-- .nk-block-head -->
-                            <div class="nk-block">
-                                <div class="row g-gs">
-                                    <div class="col-md-4">
-                                        <div class="card card-bordered card-full">
-                                            <div class="card-inner">
-                                                <div class="card-title-group align-start mb-0">
-                                                    <div class="card-title">
-                                                        <h6 class="subtitle">Total Report Count</h6>
-                                                    </div>
-                                                    <div class="card-tools">
-                                                        <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total Vulnerabilities Scanned For All Targets"></em>
-                                                    </div>
+                                    </div><!-- .card -->
+                                </div><!-- .col -->
+                                <div class="col-md-4">
+                                    <a href="/targets">
+                                    <div class="card card-bordered card-full">
+                                        <div class="card-inner">
+                                            <div class="card-title-group align-start mb-0">
+                                                <div class="card-title">
+                                                    <h6 class="subtitle">Total Waiting Target Count </h6>
                                                 </div>
-                                                <div class="card-amount">
-                                                    <span class="amount">  {{.TotalReportCount}} </span>
-                                                    </span>
-                                                </div>
-                                                <div class="invest-data">
-                                                    <div class="invest-data-amount g-2">
-                                                        <div class="invest-data-history">
-                                                            <div class="title">This Month</div>
-                                                            <div class="amount">1,200 </div>
-                                                        </div>
-                                                        <div class="invest-data-history">
-                                                            <div class="title">This Week</div>
-                                                            <div class="amount">3,010  </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="invest-data-ck">
-                                                        <canvas class="iv-data-chart" id="totalDeposit"></canvas>
-                                                    </div>
+                                                <div class="card-tools">
+                                                    <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip"
+                                                        data-bs-placement="left"
+                                                        title="Total Vulnerabilities Scanned For All Targets"></em>
                                                 </div>
                                             </div>
-                                        </div><!-- .card -->
-                                    </div><!-- .col -->
-                                    <div class="col-md-4">
-                                        <div class="card card-bordered card-full">
-                                            <div class="card-inner">
-                                                <div class="card-title-group align-start mb-0">
-                                                    <div class="card-title">
-                                                        <h6 class="subtitle">Total Waiting Target Count </h6>
-                                                    </div>
-                                                    <div class="card-tools">
-                                                        <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total Vulnerabilities Scanned For All Targets"></em>
-                                                    </div>
-                                                </div>
-                                                <div class="card-amount">
-                                                    <span class="amount"> {{.TotalWaitingTargetCount }}  </span>
-                                                    </span>
-                                                </div>
-                                                <div class="invest-data">
-                                                    <div class="invest-data-amount g-2">
+                                            <div class="card-amount">
+                                                <span class="amount"> {{.TotalWaitingTargetCount }}  </span>
+                                                </span>
+                                            </div>
+                                            <div class="invest-data">
+                                                <div class="invest-data-amount g-2">
 
-                                                         
-                                                    </div>
-                                                    <div class="invest-data-ck">
-                                                        <canvas class="iv-data-chart" id="totalDeposit"></canvas>
-                                                    </div>
+
+                                                </div>
+                                                <div class="invest-data-ck">
+                                                    <canvas class="iv-data-chart" id="totalDeposit"></canvas>
                                                 </div>
                                             </div>
-                                        </div><!-- .card -->
-                                    </div><!-- .col -->
-                                    <div class="col-md-4">
+                                        </div>
+                                    </div><!-- .card -->
+                                    </a>
+                                </div><!-- .col -->
+                                <div class="col-md-4">
+                                    <a href="/targets">
                                         <div class="card card-bordered card-full">
                                             <div class="card-inner">
                                                 <div class="card-title-group align-start mb-0">
@@ -113,9 +126,14 @@
                                                         <h6 class="subtitle">Total Scanned Target Count</h6>
                                                     </div>
                                                     <div class="card-tools">
-                                                        <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Total Vulnerabilities Scanned For All Targets"></em>
+                                                        <em class="card-hint icon ni ni-help-fill"
+                                                            data-bs-toggle="tooltip"
+                                                            data-bs-placement="left"
+                                                            title="Total Vulnerabilities Scanned For All Targets"></em>
                                                     </div>
                                                 </div>
+
+
                                                 <div class="card-amount">
                                                     <span class="amount"> {{.TotalScannedTargetCount}} </span>
                                                     </span>
@@ -130,323 +148,357 @@
                                                 </div>
                                             </div>
                                         </div><!-- .card -->
-                                    </div><!-- .col -->
+                                    </a>
+                                </div><!-- .col -->
 
-                                    <div class="col-md-5">
-                                        <div class="card card-bordered h-100">
-                                            <div class="card-inner border-bottom">
-                                                <div class="card-title-group">
-                                                    <div class="card-title">
-                                                        <h6 class="title">Notifications</h6>
-                                                    </div>
-                                                    <div class="card-tools">
-                                                        <a href="#" class="link">View All</a>
-                                                    </div>
+                                <div class="col-md-5">
+                                    <div class="card card-bordered h-100">
+                                        <div class="card-inner border-bottom">
+                                            <div class="card-title-group">
+                                                <div class="card-title">
+                                                    <h6 class="title">Notifications</h6>
+                                                </div>
+                                                <div class="card-tools">
+                                                    <a href="#" class="link">View All</a>
                                                 </div>
                                             </div>
-                                            <div class="card-inner">
-                                                <div class="timeline">
-                                                    <h6 class="timeline-head">Last Logs</h6>
-                                                    <ul class="timeline-list">
-                                                        <li class="timeline-item">
-                                                            <div class="timeline-status bg-primary is-outline"></div>
-                                                            <div class="timeline-date">13/05/24 14:02  <em class="icon ni ni-alarm-alt"></em></div>
-                                                            <div class="timeline-data">
-                                                                <h6 class="timeline-title">Add New Target</h6>
-                                                                <div class="timeline-des">
-                                                                    <p> Raised a request to add new target</p>
-                                                                    <span class="time">14:32</span>
-                                                                </div>
-                                                                
+                                        </div>
+                                        <div class="card-inner">
+                                            <div class="timeline">
+                                                <h6 class="timeline-head">Last Logs</h6>
+                                                <ul class="timeline-list">
+                                                    <li class="timeline-item">
+                                                        <div class="timeline-status bg-primary is-outline"></div>
+                                                        <div class="timeline-date">13/05/24 14:02 <em
+                                                                class="icon ni ni-alarm-alt"></em></div>
+                                                        <div class="timeline-data">
+                                                            <h6 class="timeline-title">Add New Target</h6>
+                                                            <div class="timeline-des">
+                                                                <p> Raised a request to add new target</p>
+                                                                <span class="time">14:32</span>
                                                             </div>
-                                                        </li>
-                                                        <li class="timeline-item">
-                                                            <div class="timeline-status bg-primary"></div>
-                                                            <div class="timeline-date">13/05/24 14:02  <em class="icon ni ni-alarm-alt"></em></div>
-                                                            <div class="timeline-data">
-                                                                <h6 class="timeline-title">Start New Target</h6>
-                                                                <div class="timeline-des">
-                                                                    <p>Raised a request to start new target</p>
-                                                                    <span class="time">14:32</span>
-                                                                </div>
-                                                                 
-                                                            </div>
-                                                        </li>
-                                                        <li class="timeline-item">
-                                                            <div class="timeline-status bg-pink"></div>
-                                                            <div class="timeline-date">13/05/24 14:02  <em class="icon ni ni-alarm-alt"></em></div>
-                                                            <div class="timeline-data">
-                                                                <h6 class="timeline-title">Add New VPN Gateway</h6>
-                                                                <div class="timeline-des">
-                                                                    <p>Raised a request to add new VPN Gateway</p>
-                                                                    <span class="time">14:32</span>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div><!-- .card -->
-                                    </div><!-- .col -->
-                                    <div class="col-md-7">
-                                        <div class="card card-bordered card-full">
-                                            <div class="card-inner border-bottom">
-                                                <div class="card-title-group">
-                                                    <div class="card-title">
-                                                        <h6 class="title">Last Seen 5 Agent</h6>
-                                                    </div>
-                                                    <div class="card-tools">
-                                                        <a href="#" class="link">View All</a>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-
-
-                                            <div class="nk-tb-list">
-                                                <div class="nk-tb-item nk-tb-head">
-                                                    <div class="nk-tb-col"><span>Agent Name</span></div>
-                                                     <div class="nk-tb-col tb-col-lg"><span>Last Seen</span></div>
-                                                    <div class="nk-tb-col"><span>Type</span></div>
-                                                    <div class="nk-tb-col"><span>Status</span></div>
-                                                    <div class="nk-tb-col"><span>Scan Count</span></div>
-                                                    <div class="nk-tb-col"><span>&nbsp;</span></div>
-                                                </div>
-                                                {{ range .MonitorData }}
-
-                                                <div class="nk-tb-item">
-                                                    <div class="nk-tb-col">
-                                                        <div class="align-center">
-                                                            <span class="tb-sub ms-2">{{.hostname}}</span>
                                                         </div>
-                                                    </div>
-                                                     
-                                                    <div class="nk-tb-col tb-col-lg">
-                                                        <span class="tb-sub">{{.last_seen}}</span>
-                                                    </div>
-                                                    <div class="nk-tb-col">
-                                                        <span class="tb-sub tb-amount">{{.machine_type}}</span>
-                                                    </div>
-                                                    <div class="nk-tb-col tb-col-sm">
-                                                        <span class="tb-sub text-success">{{.service_status}}</span>
-                                                    </div>
-                                                    <div class="nk-tb-col tb-col-sm">
-                                                        <span class="tb-sub text-success">{{.active_scan_count}}</span>
-                                                    </div>
-                                                    <div class="nk-tb-col nk-tb-col-action">
-                                                        <div class="dropdown">
-                                                            <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-chevron-right"></em></a>
-                                                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                                <ul class="link-list-plain">
-                                                                    <li class="btn-kill" id="{{.hostname}}"><a href="#" >Kill</a></li>
+                                                    </li>
+                                                    <li class="timeline-item">
+                                                        <div class="timeline-status bg-primary"></div>
+                                                        <div class="timeline-date">13/05/24 14:02 <em
+                                                                class="icon ni ni-alarm-alt"></em></div>
+                                                        <div class="timeline-data">
+                                                            <h6 class="timeline-title">Start New Target</h6>
+                                                            <div class="timeline-des">
+                                                                <p>Raised a request to start new target</p>
+                                                                <span class="time">14:32</span>
+                                                            </div>
 
-                                                                </ul>
+                                                        </div>
+                                                    </li>
+                                                    <li class="timeline-item">
+                                                        <div class="timeline-status bg-pink"></div>
+                                                        <div class="timeline-date">13/05/24 14:02 <em
+                                                                class="icon ni ni-alarm-alt"></em></div>
+                                                        <div class="timeline-data">
+                                                            <h6 class="timeline-title">Add New VPN Gateway</h6>
+                                                            <div class="timeline-des">
+                                                                <p>Raised a request to add new VPN Gateway</p>
+                                                                <span class="time">14:32</span>
                                                             </div>
                                                         </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div><!-- .card -->
+                                </div><!-- .col -->
+                                <div class="col-md-7">
+                                    <div class="card card-bordered card-full">
+                                        <div class="card-inner border-bottom">
+                                            <div class="card-title-group">
+                                                <div class="card-title">
+                                                    <h6 class="title">Last Seen 5 Agent</h6>
+                                                </div>
+                                                <div class="card-tools">
+                                                    <a href="#" class="link">View All</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="nk-tb-list">
+                                            <div class="nk-tb-item nk-tb-head">
+                                                <div class="nk-tb-col"><span>Agent Name</span></div>
+                                                <div class="nk-tb-col tb-col-lg"><span>Last Seen</span></div>
+                                                <div class="nk-tb-col"><span>Type</span></div>
+                                                <div class="nk-tb-col"><span>Status</span></div>
+                                                <div class="nk-tb-col"><span>Scan Count</span></div>
+                                                <div class="nk-tb-col"><span>&nbsp;</span></div>
+                                            </div>
+                                            {{ range .MonitorData }}
+
+                                            <div class="nk-tb-item">
+                                                <div class="nk-tb-col">
+                                                    <div class="align-center">
+                                                        <span class="tb-sub ms-2">{{.hostname}}</span>
                                                     </div>
                                                 </div>
-                                                {{ end }}
-                                            </div>
 
-                                        </div><!-- .card -->
-                                    </div><!-- .col -->
-                                </div>
+                                                <div class="nk-tb-col tb-col-lg">
+                                                    <span class="tb-sub">{{.last_seen}}</span>
+                                                </div>
+                                                <div class="nk-tb-col">
+                                                    <span class="tb-sub tb-amount">{{.machine_type}}</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                    <span class="tb-sub text-success">{{.service_status}}</span>
+                                                </div>
+                                                <div class="nk-tb-col tb-col-sm">
+                                                    <span class="tb-sub text-success">{{.active_scan_count}}</span>
+                                                </div>
+                                                <div class="nk-tb-col nk-tb-col-action">
+                                                    <div class="dropdown">
+                                                        <a class="text-soft dropdown-toggle btn btn-sm btn-icon btn-trigger"
+                                                           data-bs-toggle="dropdown"><em
+                                                                class="icon ni ni-chevron-right"></em></a>
+                                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                                            <ul class="link-list-plain">
+                                                                <li class="btn-kill" id="{{.hostname}}"><a
+                                                                        href="#">Kill</a></li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{ end }}
+                                        </div>
+
+                                    </div><!-- .card -->
+                                </div><!-- .col -->
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <div class="nk-add-product toggle-slide toggle-slide-right" data-content="addTarget" data-toggle-screen="any" data-toggle-overlay="true" data-toggle-body="true" data-simplebar>
-                    <div class="nk-block-head">
-                        <div class="nk-block-head-content">
-                            <h5 class="nk-block-title">New Target</h5>
-                            <div class="nk-block-des">
-                                <p>Add New Target</p>
-                            </div>
-                        </div>
-                    </div><!-- .nk-block-head -->
-                    <div class="nk-block">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label">Target</label>
-                                    <div class="form-control-wrap"> 
-                                        <textarea rows="15" class="form-control" id="targets" placeholder="abc.com &#10;abcd.com"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                               <div class="row">
-                                   <span class="preview-title overline-title">Please Select Agent</span>
-
-                               </div>
-                                <div class="col-md-5">
-                                    <div class="preview-block">
-
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input"  id="ZapProxy">
-                                            <label class="custom-control-label" for="ZapProxy">ZAP Proxy</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="preview-block">
-
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input"  id="OpenVas">
-                                            <label class="custom-control-label" for="OpenVas">OpenVAS</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 mt-2">
-                                    <div class="preview-block">
-
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input"  id="Nuclei">
-                                            <label class="custom-control-label" for="Nuclei">Nuclei</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-
-                            </div>
-                             
-                            <div class="col-12 mt-3 d-flex justify-content-end">
-                                 <button class="btn btn-success btn-save-target"><em class="icon ni ni-plus"></em><span>Save</span></button>
-                            </div>
-                        </div>
-                    </div><!-- .nk-block -->
-                </div>
             </div>
-            <!-- content @e -->
-            <!-- footer.html @s -->
-            {{template "partials/footer" .}}
-            <!-- footer.html @e -->
+
+
+            <div class="nk-add-product toggle-slide toggle-slide-right" data-content="addTarget"
+                 data-toggle-screen="any" data-toggle-overlay="true" data-toggle-body="true" data-simplebar>
+                <div class="nk-block-head">
+                    <div class="nk-block-head-content">
+                        <h5 class="nk-block-title">New Target</h5>
+                        <div class="nk-block-des">
+                            <p>Add New Target</p>
+                        </div>
+                    </div>
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Target</label>
+                                <div class="form-control-wrap">
+                                    <textarea rows="15" class="form-control" id="targets"
+                                              placeholder="example.com
+                    http://example.com
+                    https://example.com
+                    8.8.8.8"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="row">
+                                <span class="preview-title overline-title">Web Application Scan Agent</span>
+
+                            </div>
+                            <div class="col-md-5">
+                                <div class="preview-block">
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="ZapProxy">
+                                        <label class="custom-control-label" for="ZapProxy">ZAP Proxy</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 ">
+                                <div class="preview-block">
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Nuclei">
+                                        <label class="custom-control-label" for="Nuclei">Nuclei</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-4">
+                                <span class="preview-title overline-title">Network Scan Agent</span>
+
+                            </div>
+
+                            <div class="col-md-5 mt-2">
+                                <div class="preview-block">
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="Nuclei2">
+                                        <label class="custom-control-label" for="Nuclei">Nuclei</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 mt-2">
+                                <div class="preview-block">
+
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="OpenVas">
+                                        <label class="custom-control-label" for="OpenVas">OpenVAS</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-12 mt-3 d-flex justify-content-end">
+                            <button class="btn btn-success btn-save-target"><em
+                                    class="icon ni ni-plus"></em><span>Save</span></button>
+                        </div>
+                    </div>
+                </div><!-- .nk-block -->
+            </div>
         </div>
-        <!-- wrap @e -->
+        <!-- content @e -->
+        <!-- footer.html @s -->
+        {{template "partials/footer" .}}
+        <!-- footer.html @e -->
     </div>
-    <!-- app-root @e -->
+    <!-- wrap @e -->
+</div>
+<!-- app-root @e -->
 
 
-    <!-- JavaScript -->
-    <script src="./assets/js/bundle.js?ver=3.2.3"></script>
-    <script src="./assets/js/scripts.js?ver=3.2.3"></script>
-    <script src="./assets/js/charts/gd-invest.js?ver=3.2.3"></script>
+<!-- JavaScript -->
+<script src="./assets/js/bundle.js?ver=3.2.3"></script>
+<script src="./assets/js/scripts.js?ver=3.2.3"></script>
+<script src="./assets/js/charts/gd-invest.js?ver=3.2.3"></script>
 
-    <script>
-        $(document).ready(function () {
-
-            // Add new target
-            $(".btn-save-target").click(function () {
-                var dumpTargets = $("#targets").val();
-
-                dumpTargets = dumpTargets.split("\n");
-
-                var targets = JSON.stringify(dumpTargets);
-
-                console.log(targets)
-
-                var selectedAgents = [];
-                if ($("#OpenVas").is(":checked")) {
-                    selectedAgents.push("OpenVas");
-                }
-                if ($("#ZapProxy").is(":checked")) {
-                    selectedAgents.push("ZapProxy");
-                }
-                if ($("#Nuclei").is(":checked")) {
-                    selectedAgents.push("Nuclei");
-                }
-
-                selectedAgents = JSON.stringify(selectedAgents);
+<script>
+    $(document).ready(function () {
 
 
-
-                $.ajax({
-                    url: "/api/target/save",
-                    type: "POST",
-                    data: {
-                        targets: targets,
-                        selectedAgents: selectedAgents
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        if (data.success) {
-                           swal.fire({
-                                title: 'Success!',
-                                text: data.message,
-                                icon: 'success',
-                                confirmButtonText: 'Ok'
-                            }).then((result) => {
-                                if (result) {
-                                    location.reload();
-                                }
-                            });
-                        } else {
-                            Swal.fire({
-                                title: 'Error!',
-                                text: data.message,
-                                icon: 'error',
-                                confirmButtonText: 'Ok'
-                            }).then((result) => {
-                                if (result) {
-                                    // click btn
-                                    // stop reload
-
-                                }
-                            });
-                        }
-                    }
-                });
-            } );
-
-
-            $(".btn-start").click(function () {
-                $.ajax({
-                    url: "/api/scan/start",
-                    type: "POST",
-                    success: function (data) {
-                        console.log(data);
-                        if (data.success) {
-                            alert("Scan started successfully");
-                            location.reload();
-                        } else {
-                            alert("Error starting scan");
-                        }
-                    }
-                });
-            });
-
-
-            $(".btn-kill").click(function () {
-                var hostname = $(this).attr("id");
-                console.log(hostname);
-                $.ajax({
-                    url: "/api/agent/kill",
-                    type: "POST",
-                    // add application json
-                    data: {
-                        hostname: hostname
-                    },
-
-                    success: function (data) {
-                        console.log(data);
-                        if (data.success) {
-                            alert("Agent killed successfully");
-                            location.reload();
-                        } else {
-                            alert("Error killing agent");
-                        }
-                    }
-                });
-            } );
-
-
+        $("#Nuclei").change(function () {
+            if ($("#Nuclei").is(":checked")) {
+                $("#Nuclei2").prop("checked", true);
+            } else {
+                $("#Nuclei2").prop("checked", false);
+            }
         });
 
-    </script>
+        // Add new target
+        $(".btn-save-target").click(function () {
+            var dumpTargets = $("#targets").val();
+
+            dumpTargets = dumpTargets.split("\n");
+
+            var targets = JSON.stringify(dumpTargets);
+
+            console.log(targets)
+
+            var selectedAgents = [];
+            if ($("#OpenVas").is(":checked")) {
+                selectedAgents.push("OpenVas");
+            }
+            if ($("#ZapProxy").is(":checked")) {
+                selectedAgents.push("ZapProxy");
+            }
+            if ($("#Nuclei").is(":checked")) {
+                selectedAgents.push("Nuclei");
+            }
+
+            selectedAgents = JSON.stringify(selectedAgents);
+
+
+            $.ajax({
+                url: "/api/target/save",
+                type: "POST",
+                data: {
+                    targets: targets,
+                    selectedAgents: selectedAgents
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        swal.fire({
+                            title: 'Success!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result) {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result) {
+                                // click btn
+                                // stop reload
+
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+
+        $(".btn-start").click(function () {
+            $.ajax({
+                url: "/api/scan/start",
+                type: "POST",
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        alert("Scan started successfully");
+                        location.reload();
+                    } else {
+                        alert("Error starting scan");
+                    }
+                }
+            });
+        });
+
+
+        $(".btn-kill").click(function () {
+            var hostname = $(this).attr("id");
+            console.log(hostname);
+            $.ajax({
+                url: "/api/agent/kill",
+                type: "POST",
+                // add application json
+                data: {
+                    hostname: hostname
+                },
+
+                success: function (data) {
+                    console.log(data);
+                    if (data.success) {
+                        alert("Agent killed successfully");
+                        location.reload();
+                    } else {
+                        alert("Error killing agent");
+                    }
+                }
+            });
+        });
+
+
+    });
+
+</script>
 </body>
 
 </html>

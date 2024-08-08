@@ -57,7 +57,7 @@ func SaveTarget(c *fiber.Ctx) error {
 		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
 	}
 
-	var isZap, isOpenVas, isNuclei bool
+	var isZap, isOpenVas, isNuclei, isMobSF bool
 	for _, agent := range selectedAgentList {
 		if agent == "" {
 			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Please select an agent", nil))
@@ -73,13 +73,17 @@ func SaveTarget(c *fiber.Ctx) error {
 		}
 		if agent == "Nuclei" {
 			isNuclei = true
-
+		}
+		if agent == "MobSF" {
+			isMobSF = true
 		}
 
 	}
 
 	log.Println("isZap : ", isZap)
 	log.Println("isOpenVas : ", isOpenVas)
+	log.Println("isNuclei : ", isNuclei)
+	log.Println("isMobSF : ", isMobSF)
 
 	targetsRaw := c.FormValue("targets")
 	if targetsRaw == "" {
@@ -115,7 +119,7 @@ func SaveTarget(c *fiber.Ctx) error {
 		}
 		if isNuclei {
 			var isValid bool
-			if utils.IsValidDomain(target) || utils.IsValidIP(target) {
+			if utils.IsValidDomainNormal(target) || utils.IsValidIP(target) || utils.IsValidDomain(target) {
 				isValid = true
 			}
 			if isValid {
