@@ -10,6 +10,7 @@ import (
 	"hunterbounter.com/web-panel/pkg/hunterbounter_response"
 	"hunterbounter.com/web-panel/pkg/utils"
 	"log"
+	"path/filepath"
 )
 
 func CheckRecordIsExist(elemRecord map[string]interface{}) bool {
@@ -30,6 +31,54 @@ func CheckRecordIsExist(elemRecord map[string]interface{}) bool {
 
 }
 
+func ScanResultSavePDF(c *fiber.Ctx) error {
+	log.Println("Scan Result Save PDF")
+
+	uuidFileName := c.FormValue("uuid_file_name")
+	log.Println("UUID File Name: ", uuidFileName)
+	file, err := c.FormFile("file")
+	if err != nil {
+		log.Println("Error while getting file", err)
+		return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while getting file", nil))
+	}
+	var destination string
+
+	if file != nil {
+		fileExtension := filepath.Ext(file.Filename)
+		// md5
+		var fileMD5, err = utils.GenerateMD5(file)
+		if err != nil {
+			log.Println("Error while generating MD5", err)
+			return c.JSON(hunterbounter_response.HunterBounterResponse(false, "Error while generating MD5", nil))
+		}
+		log.Println("File MD5: ", fileMD5)
+
+		uniqueFileName := utils.GenerateUUID() + fileExtension
+
+		destination = "/uploads/" + uniqueFileName
+		err = c.SaveFile(file, utils.RunningDir()+destination)
+		if err != nil {
+			log.Println("Error: ", err)
+			return c.Status(fiber.StatusOK).JSON(hunterbounter_response.HunterBounterResponse(false, "File upload failed", nil))
+		}
+
+		var updateData = map[string]interface{}{
+			"pdf_file": destination,
+			"status":   3, // completed
+		}
+		var whereCondition = map[string]interface{}{"uuid_file_name": uuidFileName}
+
+		update, err := database.Update("mobile_application_results", updateData, whereCondition)
+		if err != nil {
+			log.Println("Error while updating record", err)
+			return err
+		}
+		log.Println("Update Result: ", update)
+	} else {
+		log.Println("File is nil")
+	}
+	return c.JSON(hunterbounter_response.HunterBounterResponse(true, "Scan Result Received", nil))
+}
 func ScanResultPOST(c *fiber.Ctx) error {
 
 	log.Println("Scan Result Post (OpenVAS)")
@@ -49,12 +98,6 @@ func ScanResultPOST(c *fiber.Ctx) error {
 			//log.Println("Record is exist")
 			continue
 		}
-
-		//elemRecord["description"] = html.EscapeString(utils.SafeEscapeString(elemRecord["description"])) // deprecated
-		//elemRecord["solution"] = html.EscapeString(utils.SafeEscapeString(elemRecord["solution"])) // deprecated
-		//elemRecord["other"] = html.EscapeString(utils.SafeEscapeString(elemRecord["other"])) // deprecated
-		//json_string := hunterbounter_json.ToString(elemRecord)
-
 		for key, value := range elemRecord {
 			elemRecord[key] = html.EscapeString(utils.SafeEscapeString(value))
 		}
@@ -70,6 +113,7 @@ func ScanResultPOST(c *fiber.Ctx) error {
 			"url":         elemRecord["url"],
 			"zap_id":      elemRecord["id"],
 			"risk":        elemRecord["risk"],
+			"name":        elemRecord["name"],
 			"description": elemRecord["description"],
 			"solution":    elemRecord["solution"],
 			"other_info":  elemRecord["other"].(string),
