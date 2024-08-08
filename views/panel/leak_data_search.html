@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+{{template "partials/head" .}}
+
+<style>
+    .display-none {
+        display: none;
+    }
+
+    .white-intel {
+        text-align: center;
+        margin-top: 20px;
+
+    }
+    .fullPageLoading{display:none;position:fixed;z-index:2147483640;height:2em;width:2em;overflow:show;margin:auto;top:0;left:0;bottom:0;right:0}.fullPageLoading:before{content:'';display:block;position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(rgba(20,20,20,.8),rgba(0,0,0,.6));background:-webkit-radial-gradient(rgba(20,20,20,.8),rgba(0,0,0,.6))}.fullPageLoading:not(:required){font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}.fullPageLoading:not(:required):after{content:'';display:block;font-size:10px;width:1em;height:1em;margin-top:-.5em;-webkit-animation:spinner 150ms infinite linear;-moz-animation:spinner 150ms infinite linear;-ms-animation:spinner 150ms infinite linear;-o-animation:spinner 150ms infinite linear;animation:spinner 150ms infinite linear;border-radius:.5em;-webkit-box-shadow:rgba(255,255,255,0.75) 1.5em 0 0 0,rgba(255,255,255,0.75) 1.1em 1.1em 0 0,rgba(255,255,255,0.75) 0 1.5em 0 0,rgba(255,255,255,0.75) -1.1em 1.1em 0 0,rgba(255,255,255,0.75) -1.5em 0 0 0,rgba(255,255,255,0.75) -1.1em -1.1em 0 0,rgba(255,255,255,0.75) 0 -1.5em 0 0,rgba(255,255,255,0.75) 1.1em -1.1em 0 0;box-shadow:rgba(255,255,255,0.75) 1.5em 0 0 0,rgba(255,255,255,0.75) 1.1em 1.1em 0 0,rgba(255,255,255,0.75) 0 1.5em 0 0,rgba(255,255,255,0.75) -1.1em 1.1em 0 0,rgba(255,255,255,0.75) -1.5em 0 0 0,rgba(255,255,255,0.75) -1.1em -1.1em 0 0,rgba(255,255,255,0.75) 0 -1.5em 0 0,rgba(255,255,255,0.75) 1.1em -1.1em 0 0}@-webkit-keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes spinner{0%{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}
+</style>
+<div class="fullPageLoading">Loading&#8230;</div>
+
+<body class="nk-body npc-invest npc-invest npc-default has-aside no-touch nk-nio-theme dark-mode">
+<div class="nk-app-root">
+    <!-- wrap @s -->
+    <div class="nk-wrap ">
+        <!-- main header @s -->
+        {{template "partials/header" .}}
+
+        <!-- main header @e -->
+        <!-- content @s -->
+        <div class="nk-content nk-content-fluid">
+            <div class="container-xl wide-xl">
+                <div class="nk-content-inner">
+                    <div class="nk-content-body">
+                        <div class="nk-block-head nk-block-head-sm">
+                            <div class="nk-block-between">
+                                <div class="nk-block-head-content">
+                                    <h3 class="nk-block-title page-title">Leak Data Search</h3>
+                                    <div class="nk-block-des text-soft">
+                                        <p>The leak data search via <a href="https://whiteintel.io" target="_blank">WhiteIntel</a>
+                                        </p>
+                                    </div>
+                                </div><!-- .nk-block-head-content -->
+                                <li class="nk-block-tools-opt">
+
+                                </li>
+                                <div class="nk-block-head-content">
+
+
+                                </div><!-- .nk-block-head-content -->
+                            </div><!-- .nk-block-between -->
+                        </div><!-- .nk-block-head -->
+
+                        <div class="nk-block">
+                            <div class="row justify-content-center display-none" id="total-leaks" style="padding-left: 54px">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-3">
+                                        <div class="card card-bordered">
+                                            <div class="card-inner">
+                                                <div class="card-title-group align-start mb-2">
+                                                    <div class="card-title">
+                                                        <h6 class="title">Total Leaks </h6>
+                                                    </div>
+
+                                                </div>
+                                                <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                    <div class="nk-sale-data">
+                                                        <span class="amount total-leaks-count"></span>
+                                                    </div>
+                                                    <div class="nk-sales-ck">
+                                                        <canvas class="sales-bar-chart"
+                                                                id="activeSubscription"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!-- .card -->
+                                    </div><!-- .col -->
+
+                                </div><!-- .row -->
+
+                            </div>
+
+                            <div class="row">
+                                <div class="row g-3 align-center">
+                                    <div class="col-md-4 mx-auto">
+                                        <div class="form-group">
+                                            <label class="form-label">Type your domain to see your dark-web
+                                                visibility : </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <div class="form-control-wrap">
+                                                <input type="text" class="form-control" id="query">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .search button -->
+                                    <div class="col-lg-3">
+                                        <btn class="btn btn-primary btn-search">Search</btn>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+
+                                    <div class="table-card display-none">
+                                        <div class="row display-none mt-3 mb-3" id="example-alert">
+                                            <div class="alert alert-danger alert-icon">
+                                                <em class="icon ni ni-cross-circle"></em> <strong>Maximum 13 records can be shown</strong>
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-ulogs table-leak-data">
+                                            <thead class="table-light">
+                                            <tr>
+
+                                                <th class="tb-col-ip"><span class="overline-title">Url</span></th>
+                                                <th class="tb-col-time"><span class="overline-title">Username</span>
+                                                </th>
+                                                <th class="tb-col-time"><span class="overline-title">Password</span>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div><!-- .card-preview -->
+
+                                    <div class="white-intel display-none">
+                                        <a href="https://whiteintel.io/register" target="_blank"
+                                           class="btn btn-warning">Get a FREE Membership to Access Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- content @e -->
+        <!-- footer.html @s -->
+        {{template "partials/footer" .}}
+        <!-- footer.html @e -->
+    </div>
+    <!-- wrap @e -->
+</div>
+<!-- app-root @e -->
+
+
+<!-- JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"
+        integrity="sha512-BkpSL20WETFylMrcirBahHfSnY++H2O1W+UnEEO4yNIl+jI2+zowyoGJpbtk6bx97fBXf++WJHSSK2MV4ghPcg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/datatables@1.10.18/media/js/jquery.dataTables.min.js
+"></script>
+<script src="{{.SiteURI}}assets/js/bundle.js?ver=3.2.3"></script>
+<script src="{{.SiteURI}}assets/js/scripts.js?ver=3.2.3"></script>
+<script src="{{.SiteURI}}assets/js/libs/datatable-btns.js?ver=3.2.3"></script>
+
+<script>
+    $(document).ready(function () {
+
+        function clearTable() {
+            $(".table-leak-data tbody").empty();
+
+        }
+
+        $('.btn-search').click(function () {
+            var query = $("#query").val();
+            // ajax post request
+            $.ajax({
+                type: "POST",
+                url: "/leak-data",
+                data: {query: query},
+                beforeSend: function () {
+                    $(".fullPageLoading").show();
+                },
+                success: function (data) {
+                    if (data.success) {
+                        clearTable();
+                        for (var i = 0; i < data.data.data.length; i++) {
+                            var row = "<tr><td class='tb-col-os'>" + data.data.data[i].url + "</td><td class='tb-col-ip' style='filter: blur(3px);'><span class='sub-text'>" + data.data.data[i].username + "</span></td><td class='tb-col-time' style='filter: blur(3px);'><span class='sub-text'>" + data.data.data[i].password + "</span></td></tr>";
+                            $(".table-leak-data tbody").append(row);
+                        }
+
+                        if (data.data.total_leaks >= 13) {
+                            $("#example-alert").removeClass("display-none");
+                        } else {
+                            $("#example-alert").addClass("display-none");
+                        }
+
+                        // remove display-none
+                        $(".table-card").removeClass("display-none");
+
+                        $(".white-intel").removeClass("display-none");
+
+                        $('#total-leaks').removeClass("display-none");
+                        if (data.data.total_leaks > 99){
+                            $(".total-leaks-count").text(data.data.total_leaks + "+");
+                        }else{
+                            $(".total-leaks-count").text(data.data.total_leaks);
+                        }
+
+
+                    } else {
+                        swal.fire({
+                            title: "Error",
+                            text: data.message,
+                            icon: "error",
+                            button: "Ok"
+                        });
+                    }
+                },
+                error: function (data) {
+                    swal.fire({
+                        title: "Error",
+                        text: "Please Contact Administrator",
+                        icon: "error",
+                        button: "Ok"
+                    });
+                },complete: function () {
+                    $(".fullPageLoading").hide();
+                }
+
+            });
+        });
+
+    });
+</script>
+</body>
+
+</html>
