@@ -2,6 +2,18 @@ package model
 
 import "hunterbounter.com/web-panel/pkg/database"
 
+func GetTargetList() []map[string]interface{} {
+	var sql = `
+	select * from target_view 
+`
+	dbRecords, err := database.ExecuteSql(sql)
+	if err != nil {
+		return nil
+	}
+	return dbRecords
+
+}
+
 func SaveTarget(target string, elemType int, status int) {
 
 	database.Insert("targets", map[string]interface{}{"value": target, "type": elemType, "status": status}, false)
